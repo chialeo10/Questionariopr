@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questionario Vero o Falso</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            background-color: #E0B878;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        .question-box {
+            background-color: lightblue;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            margin: auto;
+        }
+        .title-box {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .button-box {
+            margin-top: 15px;
+        }
+        #question-image {
+            margin-top: 20px;
+            max-width: 100%;
+            height: auto;
+        }
+        #user-name {
+            margin-bottom: 15px;
+            padding: 5px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="title-box">Questionario Vero o Falso</div>
+    <div class="question-box">
+        <input type="text" id="user-name" placeholder="Inserisci il tuo nome"><br><br>
+        <p id="domanda"></p>
+        <input type="radio" name="risposta" value="vero"> Vero
+        <input type="radio" name="risposta" value="falso"> Falso
+        <br>
+        <button class="button-box" id="invia">Invia</button>
+        <img id="question-image" src="" alt="Immagine associata alla domanda">
+    </div>
+
+    <script>
+        const base_questions = [
+            { text: "1. Il sole è una stella.", correct: "vero", image: "www/sole.jpg" },
+            { text: "2. L'acqua bolle a 50°C.", correct: "falso", image: "www/mucca.jpg" },
+            { text: "3. La Terra è piatta.", correct: "falso", image: "www/terra.jpg" },
+            { text: "4. Il codice binario usa 0 e 1.", correct: "vero", image: "www/OIP.jpg" },
+            { text: "5. Python è un linguaggio di programmazione.", correct: "vero", image: "www/python.jpg" },
+            { text: "6. Un giorno ha 30 ore.", correct: "falso", image: "www/orologio.jpg" },
+            { text: "7. L'ossigeno è un gas.", correct: "vero", image: "www/ossigeno.jpg" },
+            { text: "8. La somma di 2 e 3 è 6.", correct: "falso", image: "www/somma.jpg" },
+            { text: "9. Il cervello umano pesa circa 1.4 kg.", correct: "vero", image: "www/cervello.jpg" },
+            { text: "10. I pesci respirano con i polmoni.", correct: "falso", image: "www/pesci.jpg" }
+        ];
+
+        const difficult_questions = [
+            { text: "11. La velocità della luce è circa 300.000 km/s.", correct: "vero", image: "www/luce.jpg" },
+            { text: "12. Il DNA è composto da 6 basi azotate.", correct: "falso", image: "www/dna.jpg" },
+            { text: "13. I numeri primi sono infiniti.", correct: "vero", image: "www/numeri_primi.jpg" },
+            { text: "14. L'entropia di un sistema isolato può diminuire nel tempo.", correct: "falso", image: "www/entropia.jpg" },
+            { text: "15. Il neutrino ha una carica elettrica positiva.", correct: "falso", image: "www/neutrino.jpg" },
+            { text: "16. Il bosone di Higgs è stato scoperto nel 2012.", correct: "vero", image: "www/higgs.jpg" },
+            { text: "17. La teoria delle stringhe è dimostrata sperimentalmente.", correct: "falso", image: "www/stringhe.jpg" },
+            { text: "18. L'elemento più abbondante nell'universo è l'idrogeno.", correct: "vero", image: "www/idrogeno.jpg" },
+            { text: "19. I buchi neri emettono radiazione.", correct: "vero", image: "www/buchi_neri.jpg" },
+            { text: "20. Il principio di indeterminazione di Heisenberg riguarda la velocità e la posizione.", correct: "vero", image: "www/heisenberg.jpg" }
+        ];
+
+        const easy_questions = [
+            { text: "11. Il fuoco è freddo.", correct: "falso", image: "www/fuoco.jpg" },
+            { text: "12. Un anno ha 12 mesi.", correct: "vero", image: "www/anno.jpg" },
+            { text: "13. I gatti possono volare.", correct: "falso", image: "www/gatto.jpg" },
+            { text: "14. L'acqua è bagnata.", correct: "vero", image: "www/acqua_bagnata.jpg" },
+            { text: "15. I pesci vivono nell'acqua.", correct: "vero", image: "www/pesci_acqua.jpg" },
+            { text: "16. La neve è calda.", correct: "falso", image: "www/neve.jpg" },
+            { text: "17. Le mucche fanno il latte.", correct: "vero", image: "www/mucca.jpg" },
+            { text: "18. Il cielo è solitamente blu.", correct: "vero", image: "www/cielo.jpg" },
+            { text: "19. Le banane sono blu.", correct: "falso", image: "www/banana.jpg" },
+            { text: "20. Il ghiaccio è solido.", correct: "vero", image: "www/ghiaccio.jpg" }
+        ];
+
+        const final_difficult_questions = [
+            { text: "21. La costante di Planck è di circa 6.626 × 10^-34 J·s.", correct: "vero", image: "www/planck.jpg" },
+            { text: "22. La relatività generale ha descritto accuratamente il movimento dei pianeti per secoli.", correct: "vero", image: "www/relativita.jpg" },
+            { text: "23. I quark top sono i più pesanti.", correct: "vero", image: "www/quark.jpg" },
+            { text: "24. La teoria dell'inflazione cosmica è stata confermata dalla radiazione di fondo.", correct: "vero", image: "www/inflazione.jpg" },
+            { text: "25. La teoria delle stringhe è stata verificata sperimentalmente.", correct: "falso", image: "www/stringhe2.jpg" },
+            { text: "26. Il neutrino ha una massa", correct: "vero", image: "www/neutrino_massa.jpg" },
+            { text: "27. La teoria delle stringhe è unita alla relatività generale.", correct: "falso", image: "www/stringhe_relativita.jpg" },
+            { text: "28. I buchi neri ruotano a velocità relativistiche.", correct: "vero", image: "www/buchi_neri2.jpg" },
+            { text: "29. La velocità di rotazione di un buco nero aumenta con la sua massa.", correct: "falso", image: "www/po.png" },
+            { text: "30. I neutrini sono privi di massa.", correct: "falso", image: "www/neutrini_massa.jpg" }
+        ];
+
+        const final_easy_questions = [
+            { text: "21. Il cielo è sempre blu.", correct: "falso", image: "www/cielo_blu.jpg" },
+            { text: "22. Il fuoco è caldo.", correct: "vero", image: "www/fuoco2.jpg" },
+            { text: "23. I cavalli volano.", correct: "falso", image: "www/cavallo.jpg" },
+            { text: "24. Il ghiaccio è più freddo dell'acqua.", correct: "vero", image: "www/ghiaccio2.jpg" },
+            { text: "25. Il mare è salato.", correct: "vero", image: "www/mare.jpg" },
+            { text: "26. Gli uccelli possono volare.", correct: "vero", image: "www/uccello.jpg" },
+            { text: "27. I cani sono amici dell'uomo.", correct: "vero", image: "www/cane.jpg" },
+            { text: "28. Le mucche danno il latte.", correct: "vero", image: "www/mucca2.jpg" },
+            { text: "29. Il latte è bianco.", correct: "vero", image: "www/latte.jpg" },
+            { text: "30. Le montagne sono alte.", correct: "vero", image: "www/montagna.jpg" }
+        ];
+
+        let questions = base_questions;
+        let score = 0;
+        let index = 0;
+        let phase = 1;
+
+        function loadQuestion() {
+            if (index < questions.length) {
+                $("#domanda").text(questions[index].text);
+                $("#question-image").attr("src", questions[index].image || "");
+                $("input[name='risposta']").prop("checked", false);
+            } else if (phase === 1) {
+                questions = score >= 7 ? difficult_questions : easy_questions;
+                index = 0;
+                phase = 2;
+                loadQuestion();
+            } else if (phase === 2) {
+                questions = score >= 14 ? final_difficult_questions : final_easy_questions;
+                index = 0;
+                phase = 3;
+                loadQuestion();
+            } else {
+                alert("Questionario completato! Punteggio: " + score);
+            }
+        }
+
+        $(document).ready(function() {
+            loadQuestion();
+            $("#invia").click(function() {
+                let answer = $("input[name='risposta']:checked").val();
+                let nome = $("#user-name").val() || "anonimo";
+                if (!answer) return;
+
+                let rispostaUtente = {
+                    nome: nome,
+                    domanda: questions[index].text,
+                    risposta: answer,
+                    corretto: questions[index].correct,
+                    esito: answer.toLowerCase() === questions[index].correct ? "corretto" : "sbagliato"
+                };
+
+                fetch("salva_risposte.php", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(rispostaUtente)
+                });
+
+                if (answer.toLowerCase() === questions[index].correct) {
+                    score++;
+                }
+                index++;
+                loadQuestion();
+            });
+        });
+    </script>
+</body>
+</html>
