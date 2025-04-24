@@ -157,14 +157,6 @@
                     esito: answer.toLowerCase() === questions[index].correct ? "corretto" : "sbagliato"
                 };
 
-                fetch("salva_risposte.php", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(rispostaUtente)
-                });
-
                 if (answer.toLowerCase() === questions[index].correct) {
                     score++;
                 }
