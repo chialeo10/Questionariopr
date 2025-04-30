@@ -122,6 +122,8 @@
         let index = 0;
         let phase = 1;
 
+        const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzEUCFhOFpuXqbyR6-EdLZQU5RvAnjp_9Ymd33Zbi66ZTZgwohvWTztC2bwASOGNC-HQQ/exec";
+
         function loadQuestion() {
             if (index < questions.length) {
                 $("#domanda").text(questions[index].text);
@@ -138,7 +140,27 @@
                 phase = 3;
                 loadQuestion();
             } else {
-                alert("Questionario completato! Punteggio: " + score);
+                const nomeFinale = $("#user-name").val() || "anonimo";
+
+                fetch(WEBAPP_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        nome: nomeFinale,
+                        domanda: "COMPLETATO",
+                        risposta: "–",
+                        corretto: "–",
+                        esito: "–",
+                        punteggio: score
+                    })
+                })
+                .then(res => res.json())
+                .then(res => {
+                    alert("Questionario completato!\nPunteggio: " + score + "\nRisposte salvate!");
+                })
+                .catch(err => {
+                    alert("Errore nel salvataggio finale: " + err);
+                });
             }
         }
 
@@ -147,19 +169,30 @@
             $("#invia").click(function() {
                 let answer = $("input[name='risposta']:checked").val();
                 let nome = $("#user-name").val() || "anonimo";
+
                 if (!answer) return;
 
-                let rispostaUtente = {
-                    nome: nome,
-                    domanda: questions[index].text,
-                    risposta: answer,
-                    corretto: questions[index].correct,
-                    esito: answer.toLowerCase() === questions[index].correct ? "corretto" : "sbagliato"
-                };
+                let domandaAttuale = questions[index];
+                let esito = answer.toLowerCase() === domandaAttuale.correct ? "corretto" : "sbagliato";
+                if (esito === "corretto") score++;
 
-                if (answer.toLowerCase() === questions[index].correct) {
-                    score++;
-                }
+                fetch(WEBAPP_URL, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        nome: nome,
+                        domanda: domandaAttuale.text,
+                        risposta: answer,
+                        corretto: domandaAttuale.correct,
+                        esito: esito,
+                        punteggio: score
+                    })
+                }).catch(error => {
+                    console.error("Errore nel salvataggio della risposta:", error);
+                });
+
                 index++;
                 loadQuestion();
             });
