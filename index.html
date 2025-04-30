@@ -78,7 +78,7 @@
             { text: "20. Il principio di indeterminazione di Heisenberg riguarda la velocità e la posizione.", correct: "vero", image: "www/heisenberg.jpg" }
         ];
 
-        const easy_questions = [
+         const easy_questions = [
             { text: "11. Il fuoco è freddo.", correct: "falso", image: "www/fuoco.jpg" },
             { text: "12. Un anno ha 12 mesi.", correct: "vero", image: "www/anno.jpg" },
             { text: "13. I gatti possono volare.", correct: "falso", image: "www/gatto.jpg" },
@@ -122,45 +122,18 @@
         let index = 0;
         let phase = 1;
 
-        const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxr_0VY2AwF0GgOkQh7PPfCx4liioBwTjyUwmcL33-axHdTHYc4NqHCJzUNBf-uhBMXWA/exec";
-
         function loadQuestion() {
             if (index < questions.length) {
                 $("#domanda").text(questions[index].text);
                 $("#question-image").attr("src", questions[index].image || "");
                 $("input[name='risposta']").prop("checked", false);
             } else if (phase === 1) {
-                questions = score >= 7 ? difficult_questions : easy_questions;
+                questions = score >= 7 ? difficult_questions : base_questions;
                 index = 0;
                 phase = 2;
                 loadQuestion();
-            } else if (phase === 2) {
-                questions = score >= 14 ? final_difficult_questions : final_easy_questions;
-                index = 0;
-                phase = 3;
-                loadQuestion();
             } else {
-                const nomeFinale = $("#user-name").val() || "anonimo";
-
-                fetch(WEBAPP_URL, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        nome: nomeFinale,
-                        domanda: "COMPLETATO",
-                        risposta: "–",
-                        corretto: "–",
-                        esito: "–",
-                        punteggio: score
-                    })
-                })
-                .then(res => res.json())
-                .then(res => {
-                    alert("Questionario completato!\nPunteggio: " + score + "\nRisposte salvate!");
-                })
-                .catch(err => {
-                    alert("Errore nel salvataggio finale: " + err);
-                });
+                alert("Questionario completato! Punteggio: " + score);
             }
         }
 
@@ -169,28 +142,36 @@
             $("#invia").click(function() {
                 let answer = $("input[name='risposta']:checked").val();
                 let nome = $("#user-name").val() || "anonimo";
-
                 if (!answer) return;
 
-                let domandaAttuale = questions[index];
-                let esito = answer.toLowerCase() === domandaAttuale.correct ? "corretto" : "sbagliato";
-                if (esito === "corretto") score++;
+                let rispostaUtente = {
+                    nome: nome,
+                    domanda: questions[index].text,
+                    risposta: answer,
+                    corretto: questions[index].correct,
+                    esito: answer.toLowerCase() === questions[index].correct ? "corretto" : "sbagliato",
+                    punteggio: score
+                };
 
-                fetch(WEBAPP_URL, {
+                if (answer.toLowerCase() === questions[index].correct) {
+                    score++;
+                }
+
+                // Invia i dati al server
+                fetch("https://script.google.com/macros/s/AKfycbzEUCFhOFpuXqbyR6-EdLZQU5RvAnjp_9Ymd33Zbi66ZTZgwohvWTztC2bwASOGNC-HQQ/exec", {
                     method: "POST",
+                    body: JSON.stringify(rispostaUtente),
                     headers: {
                         "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        nome: nome,
-                        domanda: domandaAttuale.text,
-                        risposta: answer,
-                        corretto: domandaAttuale.correct,
-                        esito: esito,
-                        punteggio: score
-                    })
-                }).catch(error => {
-                    console.error("Errore nel salvataggio della risposta:", error);
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Dati salvati con successo:", data);
+                })
+                .catch(error => {
+                    console.error("Errore nel salvataggio finale:", error);
+                    alert("Errore nel salvataggio finale.");
                 });
 
                 index++;
