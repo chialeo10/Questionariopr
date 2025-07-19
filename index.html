@@ -240,25 +240,17 @@
                 };
 
                 // Invia dati al Google Sheet via Web App
-                fetch("https://script.google.com/macros/s/AKfycbz_P21Siu3NwuXEgUwwTxTltRogRP_SirYUt2qXElT1rueJOYw8bgchQYQGS0fx_qtjxA/exec", {
+                fetch("https://script.google.com/macros/s/AKfycbyuw9Sees6Y_Ii60IMXmbHBK_LxuTLOLwcv1VFdTowAryCYvQwTC8VqihqGfdOthwBp/exec", {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(rispostaUtente)
-                })
-                .then(res => res.json())
-                .then(response => {
-                    console.log("Dati inviati:", response);
-                })
-                .catch(err => {
-                    console.error("Errore invio dati:", err);
-                });
-
-                if (answer.toLowerCase() === questions[index].correct) {
-                    score++;
-                }
-
-                index++;
-                loadQuestion();
+                    body: JSON.stringify(rispostaUtente),
+                    headers: {
+                      'Content-Type': 'application/json'
+                    }
+                  })
+                  .then(response => response.text())
+                  .then(result => console.log('Risposta salvata:', result))
+                  .catch(error => console.error('Errore nel salvataggio:', error));
+              
             });
         });
     </script>
