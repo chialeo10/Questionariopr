@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Questionario Vero o Falso</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
@@ -111,7 +111,7 @@
         border-radius: 10px;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
-</style>
+    </style>
 </head>
 <body>
     <div class="title-box">Questionario Vero o Falso</div>
@@ -175,21 +175,21 @@
             { text: "26. Il neutrino ha una massa", correct: "vero", image: "www/neutrino_massa.jpg" },
             { text: "27. La teoria delle stringhe è unita alla relatività generale.", correct: "falso", image: "www/stringhe_relativita.jpg" },
             { text: "28. I buchi neri ruotano a velocità relativistiche.", correct: "vero", image: "www/buchi_neri2.jpg" },
-            { text: "29. La velocità di rotazione di un buco nero aumenta con la sua massa.", correct: "falso", image: "www/po.png" },
-            { text: "30. I neutrini sono privi di massa.", correct: "falso", image: "www/neutrini_massa.jpg" }
+            { text: "29. Il vuoto assoluto è raggiungibile sperimentalmente.", correct: "falso", image: "www/vuoto.jpg" },
+            { text: "30. La meccanica quantistica descrive la natura su scala atomica.", correct: "vero", image: "www/quantistica.jpg" }
         ];
 
         const final_easy_questions = [
-            { text: "21. Il cielo è sempre blu.", correct: "falso", image: "www/cielo_blu.jpg" },
-            { text: "22. Il fuoco è caldo.", correct: "vero", image: "www/fuoco2.jpg" },
-            { text: "23. I cavalli volano.", correct: "falso", image: "www/cavallo.jpg" },
-            { text: "24. Il ghiaccio è più freddo dell'acqua.", correct: "vero", image: "www/ghiaccio2.jpg" },
-            { text: "25. Il mare è salato.", correct: "vero", image: "www/mare.jpg" },
-            { text: "26. Gli uccelli possono volare.", correct: "vero", image: "www/uccello.jpg" },
-            { text: "27. I cani sono amici dell'uomo.", correct: "vero", image: "www/cane.jpg" },
-            { text: "28. Le mucche danno il latte.", correct: "vero", image: "www/mucca2.jpg" },
-            { text: "29. Il latte è bianco.", correct: "vero", image: "www/latte.jpg" },
-            { text: "30. Le montagne sono alte.", correct: "vero", image: "www/montagna.jpg" }
+            { text: "21. Il sole sorge ad est.", correct: "vero", image: "www/sole_est.jpg" },
+            { text: "22. I cani parlano come gli umani.", correct: "falso", image: "www/cane.jpg" },
+            { text: "23. L'acqua è liquida a temperatura ambiente.", correct: "vero", image: "www/acqua_liquida.jpg" },
+            { text: "24. Gli uccelli volano.", correct: "vero", image: "www/uccelli.jpg" },
+            { text: "25. Le auto hanno le ali.", correct: "falso", image: "www/auto.jpg" },
+            { text: "26. Il latte viene prodotto dalle mucche.", correct: "vero", image: "www/mucca_lattee.jpg" },
+            { text: "27. La neve cade solo in estate.", correct: "falso", image: "www/neve_estate.jpg" },
+            { text: "28. Le piante fanno la fotosintesi.", correct: "vero", image: "www/piante.jpg" },
+            { text: "29. Il mare è fatto di acqua salata.", correct: "vero", image: "www/mare.jpg" },
+            { text: "30. I pesci camminano sulla terra.", correct: "falso", image: "www/pesci_terra.jpg" }
         ];
 
         let questions = base_questions;
@@ -214,15 +214,22 @@
                 loadQuestion();
             } else {
                 alert("Questionario completato! Punteggio: " + score);
+                // Potresti disabilitare il bottone o ricaricare la pagina:
+                $("#invia").prop("disabled", true);
             }
         }
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             loadQuestion();
-            $("#invia").click(function() {
+
+            $("#invia").click(function () {
                 let answer = $("input[name='risposta']:checked").val();
-                let nome = $("#user-name").val() || "anonimo";
-                if (!answer) return;
+                let nome = $("#user-name").val().trim() || "anonimo";
+
+                if (!answer) {
+                    alert("Seleziona una risposta per favore!");
+                    return;
+                }
 
                 let rispostaUtente = {
                     nome: nome,
@@ -232,9 +239,24 @@
                     esito: answer.toLowerCase() === questions[index].correct ? "corretto" : "sbagliato"
                 };
 
+                // Invia dati al Google Sheet via Web App
+                fetch("https://script.google.com/macros/s/AKfycbx0tNs_PSAkFV6HB2xiWN5MzUxo1f5_7ao-QOkqUsy6mifUCPeqIbvDMneCargH62HMVw/exec", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(rispostaUtente)
+                })
+                .then(res => res.json())
+                .then(response => {
+                    console.log("Dati inviati:", response);
+                })
+                .catch(err => {
+                    console.error("Errore invio dati:", err);
+                });
+
                 if (answer.toLowerCase() === questions[index].correct) {
                     score++;
                 }
+
                 index++;
                 loadQuestion();
             });
