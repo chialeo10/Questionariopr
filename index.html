@@ -78,7 +78,7 @@
             { text: "20. Il principio di indeterminazione di Heisenberg riguarda la velocità e la posizione.", correct: "vero", image: "www/heisenberg.jpg" }
         ];
 
-         const easy_questions = [
+        const easy_questions = [
             { text: "11. Il fuoco è freddo.", correct: "falso", image: "www/fuoco.jpg" },
             { text: "12. Un anno ha 12 mesi.", correct: "vero", image: "www/anno.jpg" },
             { text: "13. I gatti possono volare.", correct: "falso", image: "www/gatto.jpg" },
@@ -128,9 +128,14 @@
                 $("#question-image").attr("src", questions[index].image || "");
                 $("input[name='risposta']").prop("checked", false);
             } else if (phase === 1) {
-                questions = score >= 7 ? difficult_questions : base_questions;
+                questions = score >= 7 ? difficult_questions : easy_questions;
                 index = 0;
                 phase = 2;
+                loadQuestion();
+            } else if (phase === 2) {
+                questions = score >= 14 ? final_difficult_questions : final_easy_questions;
+                index = 0;
+                phase = 3;
                 loadQuestion();
             } else {
                 alert("Questionario completato! Punteggio: " + score);
@@ -149,31 +154,12 @@
                     domanda: questions[index].text,
                     risposta: answer,
                     corretto: questions[index].correct,
-                    esito: answer.toLowerCase() === questions[index].correct ? "corretto" : "sbagliato",
-                    punteggio: score
+                    esito: answer.toLowerCase() === questions[index].correct ? "corretto" : "sbagliato"
                 };
 
                 if (answer.toLowerCase() === questions[index].correct) {
                     score++;
                 }
-
-                // Invia i dati al server
-                fetch("https://script.google.com/macros/s/AKfycbyd26_4K0rlQgJU9L7c8rv8mtKTQkBBFNPfg-40K6AkcgrGzA5C9QYw6mB7lawJwTGzuw/exec", {
-                    method: "POST",
-                    body: JSON.stringify(rispostaUtente),
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log("Dati salvati con successo:", data);
-                })
-                .catch(error => {
-                    console.error("Errore nel salvataggio finale:", error);
-                    alert("Errore nel salvataggio finale.");
-                });
-
                 index++;
                 loadQuestion();
             });
