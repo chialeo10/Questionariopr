@@ -1,173 +1,170 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Questionario Vero o Falso</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Questionario Vero o Falso</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Segoe+UI:wght@400;600&display=swap');
 
     body {
-        background-color: #f5f7fa;
-        font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        color: #333;
+      background-color: #f5f7fa;
+      font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #333;
     }
 
     .title-box {
-        font-family: 'Playfair Display', serif;
-        font-size: 38px;
-        font-weight: 600;
-        color: #2c3e50;
-        text-align: center;
-        padding: 40px 20px 10px;
-        background: linear-gradient(to right, #ffffff, #f2f2f2);
-        border-bottom: 1px solid #ddd;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        position: relative;
+      font-family: 'Playfair Display', serif;
+      font-size: 38px;
+      font-weight: 600;
+      color: #2c3e50;
+      text-align: center;
+      padding: 40px 20px 10px;
+      background: linear-gradient(to right, #ffffff, #f2f2f2);
+      border-bottom: 1px solid #ddd;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      position: relative;
     }
 
     .title-box::after {
-        content: '';
-        display: block;
-        width: 60px;
-        height: 3px;
-        background-color: #3498db;
-        margin: 10px auto 0;
-        border-radius: 2px;
+      content: '';
+      display: block;
+      width: 60px;
+      height: 3px;
+      background-color: #3498db;
+      margin: 10px auto 0;
+      border-radius: 2px;
     }
 
     .question-box {
-        background: #ffffff;
-        border: 1px solid #e0e0e0;
-        border-radius: 12px;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
-        max-width: 650px;
-        margin: 40px auto;
-        padding: 35px 40px;
-        text-align: left;
+      background: #ffffff;
+      border: 1px solid #e0e0e0;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+      max-width: 650px;
+      margin: 40px auto;
+      padding: 35px 40px;
+      text-align: left;
     }
 
     #user-name {
-        width: 100%;
-        padding: 12px;
-        font-size: 16px;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        margin-bottom: 25px;
-        transition: border-color 0.3s;
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-bottom: 25px;
+      transition: border-color 0.3s;
     }
 
     #user-name:focus {
-        border-color: #3498db;
-        outline: none;
+      border-color: #3498db;
+      outline: none;
     }
 
     p#domanda {
-        font-size: 21px;
-        font-weight: 500;
-        margin-bottom: 20px;
-        color: #2c3e50;
+      font-size: 21px;
+      font-weight: 500;
+      margin-bottom: 20px;
+      color: #2c3e50;
     }
 
     input[type="radio"] {
-        margin-right: 10px;
+      margin-right: 10px;
     }
 
     label {
-        font-size: 17px;
-        margin-right: 25px;
-        cursor: pointer;
+      font-size: 17px;
+      margin-right: 25px;
+      cursor: pointer;
     }
 
     .button-box {
-        margin-top: 30px;
-        text-align: center;
+      margin-top: 30px;
+      text-align: center;
     }
 
     #invia {
-        background-color: #3498db;
-        color: white;
-        font-size: 16px;
-        border: none;
-        border-radius: 30px;
-        padding: 12px 30px;
-        cursor: pointer;
-        box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
-        transition: background-color 0.3s ease, transform 0.1s ease;
+      background-color: #3498db;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 30px;
+      padding: 12px 30px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
+      transition: background-color 0.3s ease, transform 0.1s ease;
     }
 
     #invia:hover {
-        background-color: #2980b9;
-        transform: translateY(-1px);
+      background-color: #2980b9;
+      transform: translateY(-1px);
     }
 
     #question-image {
-        display: block;
-        margin: 35px auto 10px;
-        max-width: 100%;
-        border-radius: 10px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      display: block;
+      margin: 35px auto 10px;
+      max-width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
-</style>
+  </style>
 </head>
 <body>
-    <div class="title-box">Questionario Vero o Falso</div>
-    <div class="question-box">
-        <input type="text" id="user-name" placeholder="Inserisci il tuo nome"><br><br>
-        <p id="domanda"></p>
-        <label><input type="radio" name="risposta" value="vero"> Vero</label>
-        <label><input type="radio" name="risposta" value="falso"> Falso</label>
-        <div class="button-box">
-            <button id="invia">Invia</button>
-        </div>
-        <img id="question-image" src="" alt="Immagine associata alla domanda">
+  <div class="title-box">Questionario Vero o Falso</div>
+  <div class="question-box">
+    <input type="text" id="user-name" placeholder="Inserisci il tuo nome"><br><br>
+    <p id="domanda"></p>
+    <label><input type="radio" name="risposta" value="vero"> Vero</label>
+    <label><input type="radio" name="risposta" value="falso"> Falso</label>
+    <div class="button-box">
+      <button id="invia">Invia</button>
+
+
     </div>
-
-    <script>
-        const base_questions = [
-            { text: "1. Il sole è una stella.", correct: "vero", image: "www/sole.jpg" },
-            { text: "2. L'acqua bolle a 50°C.", correct: "falso", image: "www/mucca.jpg" },
-            { text: "3. La Terra è piatta.", correct: "falso", image: "www/terra.jpg" },
-            { text: "4. Il codice binario usa 0 e 1.", correct: "vero", image: "www/OIP.jpg" },
-            { text: "5. Python è un linguaggio di programmazione.", correct: "vero", image: "www/python.jpg" },
-            { text: "6. Un giorno ha 30 ore.", correct: "falso", image: "www/orologio.jpg" },
-            { text: "7. L'ossigeno è un gas.", correct: "vero", image: "www/ossigeno.jpg" },
-            { text: "8. La somma di 2 e 3 è 6.", correct: "falso", image: "www/somma.jpg" },
-            { text: "9. Il cervello umano pesa circa 1.4 kg.", correct: "vero", image: "www/cervello.jpg" },
-            { text: "10. I pesci respirano con i polmoni.", correct: "falso", image: "www/pesci.jpg" }
-        ];
-
-        const difficult_questions = [
-            { text: "11. La velocità della luce è circa 300.000 km/s.", correct: "vero", image: "www/luce.jpg" },
+    <img id="question-image" src="" alt="Immagine associata alla domanda">
+  </div>
+ 
+  <script>
+    const base_questions = [
+      { text: "1. Il sole è una stella.", correct: "vero", image: "www/sole.jpg" },
+      { text: "2. L'acqua bolle a 80 gradi Celsius.", correct: "falso", image: "www/acqua.jpg" },
+      { text: "3. La Terra ha due lune.", correct: "falso", image: "www/luna.jpg" },
+      { text: "4. Le piante producono ossigeno.", correct: "vero", image: "www/piante.jpg" },
+      { text: "5. Gli uccelli sono mammiferi.", correct: "falso", image: "www/uccelli.jpg" },
+      { text: "6. Il sangue è rosso.", correct: "vero", image: "www/sangue.jpg" },
+      { text: "7. Il latte è una bevanda vegetale.", correct: "falso", image: "www/latte.jpg" },
+      { text: "8. Il fuoco ha bisogno di ossigeno per bruciare.", correct: "vero", image: "www/fuoco.jpg" },
+      { text: "9. I pesci possono volare.", correct: "falso", image: "www/pesce.jpg" },
+      { text: "10. L’elettricità può essere pericolosa.", correct: "vero", image: "www/elettricita.jpg" }
+    ];
+    const difficult_questions = [ { text: "11. La velocità della luce è circa 300.000 km/s.", correct: "vero", image: "www/luce.jpg" },
             { text: "12. Il DNA è composto da 6 basi azotate.", correct: "falso", image: "www/dna.jpg" },
             { text: "13. I numeri primi sono infiniti.", correct: "vero", image: "www/numeri_primi.jpg" },
             { text: "14. L'entropia di un sistema isolato può diminuire nel tempo.", correct: "falso", image: "www/entropia.jpg" },
-            { text: "15. Il neutrino ha una carica elettrica positiva.", correct: "falso", image: "www/neutrino.jpg" },
-            { text: "16. Il bosone di Higgs è stato scoperto nel 2012.", correct: "vero", image: "www/higgs.jpg" },
-            { text: "17. La teoria delle stringhe è dimostrata sperimentalmente.", correct: "falso", image: "www/stringhe.jpg" },
+@@ -151,10 +136,8 @@
             { text: "18. L'elemento più abbondante nell'universo è l'idrogeno.", correct: "vero", image: "www/idrogeno.jpg" },
             { text: "19. I buchi neri emettono radiazione.", correct: "vero", image: "www/buchi_neri.jpg" },
             { text: "20. Il principio di indeterminazione di Heisenberg riguarda la velocità e la posizione.", correct: "vero", image: "www/heisenberg.jpg" }
-        ];
+];
+    const easy_questions = [ { text: "11. Il fuoco è freddo.", correct: "falso", image: "www/fuoco.jpg" },
 
-        const easy_questions = [
-            { text: "11. Il fuoco è freddo.", correct: "falso", image: "www/fuoco.jpg" },
+
             { text: "12. Un anno ha 12 mesi.", correct: "vero", image: "www/anno.jpg" },
             { text: "13. I gatti possono volare.", correct: "falso", image: "www/gatto.jpg" },
             { text: "14. L'acqua è bagnata.", correct: "vero", image: "www/acqua_bagnata.jpg" },
-            { text: "15. I pesci vivono nell'acqua.", correct: "vero", image: "www/pesci_acqua.jpg" },
-            { text: "16. La neve è calda.", correct: "falso", image: "www/neve.jpg" },
+@@ -163,104 +146,93 @@
             { text: "17. Le mucche fanno il latte.", correct: "vero", image: "www/mucca.jpg" },
             { text: "18. Il cielo è solitamente blu.", correct: "vero", image: "www/cielo.jpg" },
             { text: "19. Le banane sono blu.", correct: "falso", image: "www/banana.jpg" },
-            { text: "20. Il ghiaccio è solido.", correct: "vero", image: "www/ghiaccio.jpg" }
-        ];
+            { text: "20. Il ghiaccio è solido.", correct: "vero", image: "www/ghiaccio.jpg" }];
+    const final_difficult_questions = [{ text: "21. La costante di Planck è di circa 6.626 × 10^-34 J·s.", correct: "vero", image: "www/planck.jpg" },
 
-        const final_difficult_questions = [
-            { text: "21. La costante di Planck è di circa 6.626 × 10^-34 J·s.", correct: "vero", image: "www/planck.jpg" },
+
+
             { text: "22. La relatività generale ha descritto accuratamente il movimento dei pianeti per secoli.", correct: "vero", image: "www/relativita.jpg" },
             { text: "23. I quark top sono i più pesanti.", correct: "vero", image: "www/quark.jpg" },
             { text: "24. La teoria dell'inflazione cosmica è stata confermata dalla radiazione di fondo.", correct: "vero", image: "www/inflazione.jpg" },
@@ -176,11 +173,8 @@
             { text: "27. La teoria delle stringhe è unita alla relatività generale.", correct: "falso", image: "www/stringhe_relativita.jpg" },
             { text: "28. I buchi neri ruotano a velocità relativistiche.", correct: "vero", image: "www/buchi_neri2.jpg" },
             { text: "29. La velocità di rotazione di un buco nero aumenta con la sua massa.", correct: "falso", image: "www/po.png" },
-            { text: "30. I neutrini sono privi di massa.", correct: "falso", image: "www/neutrini_massa.jpg" }
-        ];
-
-        const final_easy_questions = [
-            { text: "21. Il cielo è sempre blu.", correct: "falso", image: "www/cielo_blu.jpg" },
+            { text: "30. I neutrini sono privi di massa.", correct: "falso", image: "www/neutrini_massa.jpg" }];
+    const final_easy_questions = [{ text: "21. Il cielo è sempre blu.", correct: "falso", image: "www/cielo_blu.jpg" },
             { text: "22. Il fuoco è caldo.", correct: "vero", image: "www/fuoco2.jpg" },
             { text: "23. I cavalli volano.", correct: "falso", image: "www/cavallo.jpg" },
             { text: "24. Il ghiaccio è più freddo dell'acqua.", correct: "vero", image: "www/ghiaccio2.jpg" },
@@ -190,55 +184,73 @@
             { text: "28. Le mucche danno il latte.", correct: "vero", image: "www/mucca2.jpg" },
             { text: "29. Il latte è bianco.", correct: "vero", image: "www/latte.jpg" },
             { text: "30. Le montagne sono alte.", correct: "vero", image: "www/montagna.jpg" }
-        ];
+];
 
-        let questions = base_questions;
-        let score = 0;
-        let index = 0;
-        let phase = 1;
+    let questions = base_questions;
+    let score = 0;
+    let index = 0;
+    let phase = 1;
 
-        function loadQuestion() {
-            if (index < questions.length) {
-                $("#domanda").text(questions[index].text);
-                $("#question-image").attr("src", questions[index].image || "");
-                $("input[name='risposta']").prop("checked", false);
-            } else if (phase === 1) {
-                questions = score >= 7 ? difficult_questions : easy_questions;
-                index = 0;
-                phase = 2;
-                loadQuestion();
-            } else if (phase === 2) {
-                questions = score >= 14 ? final_difficult_questions : final_easy_questions;
-                index = 0;
-                phase = 3;
-                loadQuestion();
-            } else {
-                alert("Questionario completato! Punteggio: " + score);
-            }
-        }
+    function loadQuestion() {
+      if (index < questions.length) {
+        $("#domanda").text(questions[index].text);
+        $("#question-image").attr("src", questions[index].image || "");
+        $("input[name='risposta']").prop("checked", false);
+      } else {
+        alert("Questionario completato! Punteggio: " + score);
+      }
+    }
 
-        $(document).ready(function() {
-            loadQuestion();
-            $("#invia").click(function() {
-                let answer = $("input[name='risposta']:checked").val();
-                let nome = $("#user-name").val() || "anonimo";
-                if (!answer) return;
+    // 🔐 CONFIGURAZIONE SUPABASE
+    const SUPABASE_URL = 'https://lteztcnhpkleuvqeaphq.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx0ZXp0Y25ocGtsZXV2cWVhcGhxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI5MzE5MjYsImV4cCI6MjA2ODUwNzkyNn0.Wbvy9R5kVYRAjxzhbxK4d76ctqAT-ZyX4kaL7nqGFnc';
 
-                let rispostaUtente = {
-                    nome: nome,
-                    domanda: questions[index].text,
-                    risposta: answer,
-                    corretto: questions[index].correct,
-                    esito: answer.toLowerCase() === questions[index].correct ? "corretto" : "sbagliato"
-                };
-
-                if (answer.toLowerCase() === questions[index].correct) {
-                    score++;
-                }
-                index++;
-                loadQuestion();
-            });
+    async function salvaRispostaSuSupabase(rispostaUtente) {
+      try {
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/risposte`, {
+          method: 'POST',
+          headers: {
+            'apikey': SUPABASE_KEY,
+            'Authorization': 'Bearer ' + SUPABASE_KEY,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=representation'
+          },
+          body: JSON.stringify(rispostaUtente)
         });
-    </script>
+
+        if (!response.ok) {
+          console.error("Errore Supabase:", await response.text());
+
+        }
+      } catch (error) {
+        console.error("Errore di rete:", error);
+      }
+    }
+
+    $(document).ready(function() {
+      loadQuestion();
+      $("#invia").click(function() {
+        let answer = $("input[name='risposta']:checked").val();
+        let nome = $("#user-name").val() || "anonimo";
+        if (!answer) return;
+
+        let rispostaUtente = {
+          nome: nome,
+          domanda: questions[index].text,
+          risposta: answer,
+          corretto: questions[index].correct,
+          esito: answer.toLowerCase() === questions[index].correct ? "corretto" : "sbagliato"
+        };
+
+        salvaRispostaSuSupabase(rispostaUtente);
+
+        if (answer.toLowerCase() === questions[index].correct) {
+          score++;
+        }
+        index++;
+        loadQuestion();
+      });
+    });
+  </script>
 </body>
 </html>
