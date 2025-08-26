@@ -559,14 +559,14 @@
         id:'sec_password_order',
   section:'SICUREZZA',
   text:'Assegna un numero da 1 (più sicura) a 4 (meno sicura) a ciascuna password.',
-  type:'matrix',
-  rows:[
-    'Tr*9kLm!28#q',
+  type:'matrixPerItem',
+  items:[
     'P4ssw0rd!',
-    'Maria1970',
-    '12345678'
+    'Tr*9kLm!28#q',
+    '12345678',
+    'Maria1970'
   ],
-  columns:['Ordine'],
+  options:['1','2','3','4'],
   image:null
       }
     );
@@ -585,7 +585,7 @@
           'D. Il sito non funziona senza password'
         ],
         correct:'A. La connessione tra il tuo dispositivo e il sito è sicura',
-        image:'https://username.github.io/repo-name/www/lucchetto.jpg'
+        image:'www/lucchetto.jpg'
       },
       {
         id:'ico_gear',
@@ -599,7 +599,7 @@
           'D. Aggiornare un’applicazione'
         ],
         correct:'A. Aprire il menu delle impostazioni',
-        image:'https://username.github.io/repo-name/www/ingranaggio.jpg'
+        image:'www/ingranaggio.jpg'
       },
       {
         id:'ico_mail',
@@ -613,7 +613,7 @@
           'D. Documenti salvati'
         ],
         correct:'A. Email o messaggi',
-        image:'https://username.github.io/repo-name/www/email.jpg'
+        image:'www/email.jpg'
       },
       {
         id:'ico_wifi',
@@ -627,7 +627,7 @@
           'D. Stai guardando un video in streaming'
         ],
         correct:'A. Sei connesso a Internet tramite rete wireless',
-        image:'https://username.github.io/repo-name/www/wifi.png'
+        image:'www/wifi.png'
       },
       {
         id:'ico_bt',
@@ -655,7 +655,7 @@
           'D. Stamparlo per decorare un documento'
         ],
         correct:'A. Scansionarlo per aprire un link, ottenere informazioni o accedere a un servizio',
-        image:'https://username.github.io/repo-name/www/download.png'
+        image:'www/download.png'
       },
       {
         id:'ico_cpu',
@@ -1109,6 +1109,7 @@
   </script>
 </body>
 </html>
+
 
 
 
