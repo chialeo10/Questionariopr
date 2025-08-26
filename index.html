@@ -195,7 +195,7 @@
         text:'Di cosa avresti bisogno per imparare a usare un dispositivo digitale? (Risposta multipla)',
         type:'multi',
         options:['Avere un dispositivo personale','Pratica e dedizione','Interesse e iniziativa','Memoria e concentrazione'],
-        image:'img/learning_needs.jpg'
+        image:null
       },
       {
         id:'disp_no_difficolta',
@@ -204,7 +204,7 @@
         text:'Quali difficoltà incontri (o pensi potresti incontrare) nell’imparare a usare un dispositivo digitale? (Risposta multipla)',
         type:'multi',
         options:['Difficoltà pratiche','Difficoltà di lettura e scrittura','Memoria e agilità mentale','Paura del dispositivo o timore di romperlo'],
-        image:'img/difficulties.jpg'
+        image:null
       },
       {
         id:'disp_no_aiuti',
@@ -213,7 +213,7 @@
         text:'Cosa pensi potrebbe aiutarti di più ad imparare a usare un dispositivo digitale? (Risposta multipla)',
         type:'multi',
         options:['Avere più tempo per fare pratica','Ricevere spiegazioni semplici e chiare','Avere qualcuno che ti supporta e ti guida','Ripetere spesso le stesse operazioni fino a sentirti sicuro'],
-        image:'img/help_learn.jpg'
+        image:null
       },
       // --- ramo SI
       {
@@ -223,7 +223,7 @@
         text:'Da quanto tempo utilizzi regolarmente dispositivi digitali (smartphone, tablet o computer)?',
         type:'single',
         options:['Meno di 1 anno','Da 1 a 3 anni','Da 3 a 5 anni','Più di 5 anni'],
-        image:'img/usage_time.jpg'
+        image:null
       },
       {
         id:'disp_si_tipologia',
@@ -233,7 +233,7 @@
         type:'multi',
         options:['Computer fisso o portatile','Tablet / iPad','eReader (es. Kindle)','Console videogiochi con accesso Internet','Smart TV','Smartphone','Altro (specificare)'],
         allowOther:true,
-        image:'img/devices_list.jpg'
+        image:null
       },
       // Per ogni dispositivo selezionato chiediamo 3 sotto-domande (matrice ripetuta)
       {
@@ -250,7 +250,7 @@
           {key:'agio', label:'Quanto ti senti a tuo agio nell’utilizzarlo?', choices:['Per niente','Poco','Abbastanza','Molto','Completamente a mio agio']},
           {key:'frequenza', label:'Con quale frequenza lo usi?', choices:['Spesso','Occasionalmente','Mai']}
         ],
-        image:'img/per_device.jpg'
+        image:null
       },
       // Domande aggiuntive per Smartphone/Tablet
       {
@@ -264,7 +264,7 @@
         type:'multi',
         options:['Chiamate e messaggi','Social network','Giochi','Video / streaming','Navigazione internet','Lavoro / studio','Fotografia e video','Altro (specificare)'],
         allowOther:true,
-        image:'img/smartphone_tablet.jpg'
+        image:null
       },
       {
         id:'disp_t9',
@@ -283,7 +283,7 @@
           'Non lo so'
         ],
         correct:'Un sistema di scrittura predittiva che suggerisce le parole mentre digiti',
-        image:'img/t9.jpg'
+        image:null
       },
       // Domande aggiuntive per Computer
       {
@@ -293,7 +293,7 @@
         text:'(Computer) Chi ti ha insegnato ad utilizzare il computer?',
         type:'multi',
         options:['insegnante','famiglia','libri','autodidatta','colleghi','amici','tutorial online','altri'],
-        image:'img/pc_teacher.jpg'
+        image:null
       },
       {
         id:'pc_per_cosa',
@@ -304,7 +304,7 @@
         rows:['Lavoro','Studio','Navigazione internet','Gaming','Grafica / montaggio video','Programmazione / sviluppo software','Altro (specificare)'],
         rowOther:true,
         columns:['Giornalmente','3-4 volte a settimana','1-2 volte a settimana','1-2 volte al mese','Raramente','Mai'],
-        image:'img/pc_usage.jpg'
+        image:null
       },
       {
         id:'pc_app_frequenti',
@@ -314,7 +314,7 @@
         type:'multi',
         options:['Suite Office (Word, Excel, ecc.)','App per videoconferenze (Zoom, Teams, Meet, ecc.)','App per note e organizzazione (Evernote, Notion, ecc.)','App per gestione di progetti','Altro (specificare)'],
         allowOther:true,
-        image:'img/pc_apps.jpg'
+        image:null
       },
       {
         id:'pc_suite_which',
@@ -324,7 +324,7 @@
         type:'multi',
         options:['Microsoft Word','Microsoft Excel','Microsoft PowerPoint','Microsoft OneNote','Altro (specificare)'],
         allowOther:true,
-        image:'img/office_suite.jpg'
+        image:null
       },
       {
         id:'pc_suite_use',
@@ -342,7 +342,7 @@
           'Altro (specificare)'
         ],
         allowOther:true,
-        image:'img/office_tasks.jpg'
+        image:null
       },
       // Domande aggiuntive per Smart TV
       {
@@ -359,7 +359,7 @@
           'Altro (specificare)'
         ],
         allowOther:true,
-        image:'img/smart_tv.jpg'
+        image:null
       },
       {
         id:'tv_quanto_spesso',
@@ -368,7 +368,7 @@
         text:'(Smart TV) Quanto spesso utilizzi le funzioni “smart” della TV?',
         type:'single',
         options:['Quasi sempre','Spesso','Occasionalmente','Raramente','Mai'],
-        image:'img/smart_tv_use.jpg'
+        image:null
       }
     );
 
@@ -380,7 +380,7 @@
         text:'Tramite quale connessione accedi a Internet? (Scelta multipla)',
         type:'multi',
         options:['Wi-Fi di casa','Rete mobile (4G/5G)','Wi-Fi pubblico','Non utilizzo Internet'],
-        image:'img/internet_conn.jpg'
+        image:null
       },
       // Se "Non utilizzo Internet" è selezionato, le sotto-domande internet si saltano.
       {
@@ -390,7 +390,7 @@
         text:'Negli ultimi 3 mesi hai utilizzato Internet per acquistare beni o servizi?',
         type:'single',
         options:['Sì','No'],
-        image:'img/ecommerce.jpg'
+        image:null
       },
       {
         id:'net_acquisti_freq',
@@ -408,7 +408,7 @@
           'Comprare o vendere su siti di annunci (Subito.it, Vinted)'
         ],
         columns:['Giornalmente','3-4 volte a settimana','1-2 volte a settimana','1-2 volte al mese','Raramente','Mai'],
-        image:'img/ecommerce_matrix.jpg'
+        image:null
       },
       {
         id:'net_comms_3m',
@@ -417,13 +417,13 @@
         text:'Negli ultimi 3 mesi hai utilizzato Internet per comunicare con altre persone?',
         type:'single',
         options:['Sì','No'],
-        image:'img/communication.jpg'
+        image:null
       },
       {
         id:'net_comms_channels',
         showIf:{id:'net_comms_3m', equals:'Sì'},
         section:'INTERNET',
-        text:'Quali canali hai usato?',
+        text:'Quali strumenti online hai utilizzato per comunicare con altre persone negli ultimi 3 mesi?',
         type:'multi',
         options:[
           'Inviare o leggere e-mail',
@@ -431,7 +431,7 @@
           'Chattare su servizi di messaggistica istantanea (WhatsApp, Telegram, Messenger)',
           'Usare social network per comunicare (Facebook, Instagram, LinkedIn)'
         ],
-        image:'img/channels.jpg'
+        image:null
       },
       {
         id:'net_info_3m',
@@ -440,7 +440,7 @@
         text:'Negli ultimi 3 mesi hai utilizzato Internet per informarti o cercare contenuti?',
         type:'single',
         options:['Sì','No'],
-        image:'img/information.jpg'
+        image:null
       },
       {
         id:'net_info_types',
@@ -458,7 +458,7 @@
           'Seguire i mercati finanziari'
         ],
         columns:['Giornalmente','3-4 volte a settimana','1-2 volte a settimana','1-2 volte al mese','Raramente','Mai'],
-        image:'img/content_types.jpg'
+        image:null
       },
       {
         id:'net_pubserv_3m',
@@ -467,7 +467,7 @@
         text:'Negli ultimi 3 mesi hai utilizzato Internet per servizi pubblici?',
         type:'single',
         options:['Sì','No'],
-        image:'img/public_services.jpg'
+        image:null
       },
       {
         id:'net_pubserv_how',
@@ -480,7 +480,7 @@
           'Accedere a servizi pubblici digitali (SPID, CIE, Fascicolo Sanitario, Agenzia delle Entrate, INPS)',
           'altro'
         ],
-        image:'img/public_services_how.jpg'
+        image:null
       }
     );
 
@@ -492,7 +492,7 @@
         text:'Attualmente svolgi attività lavorativa?',
         type:'single',
         options:['Sì','No'],
-        image:'img/work.jpg'
+        image:null
       },
       {
         id:'job_yn_list',
@@ -508,7 +508,7 @@
           'Hai mai utilizzato strumenti di condivisione file (Google Drive, Dropbox)?',
           'Lavori o hai lavorato mai in smart working?'
         ],
-        image:'img/work_yesno.jpg'
+        image:null
       },
       {
         id:'job_skills_matrix',
@@ -527,7 +527,7 @@
           'Applicazioni di comunicazione (es. email, videoconferenze)'
         ],
         columns:['Nessuna','Base','Intermedia','Avanzata'],
-        image:'img/work_skills.jpg'
+        image:null
       }
     );
 
@@ -539,7 +539,7 @@
         text:'Solitamente prendi precauzioni per proteggere i tuoi dati online?',
         type:'single',
         options:['Sì','No'],
-        image:'img/security.jpg'
+        image:null
       },
       {
         id:'sec_pratiche',
@@ -553,20 +553,21 @@
           'Hai mai installato e/o aggiornato un antivirus?',
           'Controlli solitamente le impostazioni di privacy sui social?'
         ],
-        image:'img/security_habits.jpg'
+        image:null
       },
       {
         id:'sec_password_order',
-        section:'SICUREZZA',
-        text:'Ordina queste password dalla più sicura (1) alla meno sicura (4).',
-        type:'rank',
-        rankItems:[
-          'Tr*9kLm!28#q',
-          'P4ssw0rd!',
-          'Maria1970',
-          '12345678'
-        ],
-        image:'img/passwords.jpg'
+  section:'SICUREZZA',
+  text:'Assegna un numero da 1 (più sicura) a 4 (meno sicura) a ciascuna password.',
+  type:'matrix',
+  rows:[
+    'Tr*9kLm!28#q',
+    'P4ssw0rd!',
+    'Maria1970',
+    '12345678'
+  ],
+  columns:['Ordine'],
+  image:null
       }
     );
 
@@ -1108,6 +1109,7 @@
   </script>
 </body>
 </html>
+
 
 
 
