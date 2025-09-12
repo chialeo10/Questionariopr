@@ -25,13 +25,24 @@ table th, table td { border: 1px solid #ccc; padding: 8px; text-align: center; }
 <body>
 <div class="container">
 <h1>Benvenuti – Questionario sulle Competenze Digitali degli Over 50</h1>
+
 <div class="section">
 <p>Questo questionario fa parte di una ricerca dedicata a esplorare il rapporto con le tecnologie digitali da parte delle persone over 50. L’intento è quello di raccogliere informazioni utili per comprendere meglio le competenze digitali in questa fascia d’età e favorire lo sviluppo di strumenti, servizi e percorsi formativi più inclusivi e accessibili.</p>
 <p>Non ci sono risposte giuste o sbagliate: ogni contributo è importante e riflette esperienze reali, senza alcun tipo di valutazione.</p>
 <p>Le risposte saranno raccolte in forma anonima e utilizzate esclusivamente per scopi di ricerca, ogni informazione fornita è preziosa per il successo dello studio.</p>
 <p>Grazie fin da ora per la partecipazione!</p>
 </div>
+
 <form id="questionarioForm">
+
+<!-- SEZIONE INIZIALE: Nome -->
+<div class="section">
+<h2>Informazioni iniziali</h2>
+<div class="question">
+<label for="nome">Nome</label>
+<input type="text" id="nome" name="nome" required>
+</div>
+</div>
 
 <!-- SEZIONE I -->
 <div class="section">
@@ -40,6 +51,7 @@ table th, table td { border: 1px solid #ccc; padding: 8px; text-align: center; }
 <label for="q001">Q.001 Data di nascita</label>
 <input type="date" id="q001" name="q001" required>
 </div>
+
 <div class="question">
 <label>Q.002 Genere</label>
 <div class="options">
@@ -47,6 +59,7 @@ table th, table td { border: 1px solid #ccc; padding: 8px; text-align: center; }
 <label><input type="radio" name="q002" value="Femmina"> Femmina</label>
 </div>
 </div>
+
 <div class="question">
 <label for="q003">Q.003 Regione di residenza</label>
 <select id="q003" name="q003" required>
@@ -73,6 +86,8 @@ table th, table td { border: 1px solid #ccc; padding: 8px; text-align: center; }
 <option value="Veneto">Veneto</option>
 </select>
 </div>
+
+<!-- Q004-Q007: Radio button come nel tuo testo -->
 <div class="question">
 <label>Q.004 In che tipo di zona si trova la casa?</label>
 <div class="options">
@@ -83,6 +98,7 @@ table th, table td { border: 1px solid #ccc; padding: 8px; text-align: center; }
 <label><input type="radio" name="q004" value="Campagna"> In campagna o in un piccolo centro</label>
 </div>
 </div>
+
 <div class="question">
 <label>Q.005 Titolo di studio più elevato</label>
 <div class="options">
@@ -99,6 +115,7 @@ table th, table td { border: 1px solid #ccc; padding: 8px; text-align: center; }
 <label><input type="radio" name="q005" value="Altro"> Altro titolo di studio non post-secondario</label>
 </div>
 </div>
+
 <div class="question">
 <label>Q.006 Situazione lavorativa</label>
 <div class="options">
@@ -109,6 +126,7 @@ table th, table td { border: 1px solid #ccc; padding: 8px; text-align: center; }
 <label><input type="radio" name="q006" value="Casalingo"> Casalingo/a</label>
 </div>
 </div>
+
 <div class="question">
 <label>Q.007 Stato civile</label>
 <div class="options">
@@ -120,9 +138,8 @@ table th, table td { border: 1px solid #ccc; padding: 8px; text-align: center; }
 <label><input type="radio" name="q007" value="Vedovo Altro"> Vedovo/a o altro</label>
 </div>
 </div>
-</div>
 
-<!-- SEZIONE II fino a VII: tutte le domande complete (Q008-Q050) con checkbox, radio, tabelle, icone, e domande condizionali -->
+<!-- SEZIONI Q008-Q050: aggiungi qui tutte le domande come nel tuo testo originale -->
 
 <button type="submit">Invia Risposte</button>
 </form>
@@ -132,16 +149,36 @@ table th, table td { border: 1px solid #ccc; padding: 8px; text-align: center; }
 <script>
 const SUPABASE_URL = 'https://lteztcnhpkleuvqeaphq.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx0ZXp0Y25ocGtsZXV2cWVhcGhxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI5MzE5MjYsImV4cCI6MjA2ODUwNzkyNn0.Wbvy9R5kVYRAjxzhbxK4d76ctqAT-ZyX4kaL7nqGFnc';
+
 const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const form = document.getElementById('questionarioForm');
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const data = Object.fromEntries(new FormData(form).entries());
+
+    const formData = new FormData(form);
+    const data = {};
+
+    // Gestione input multipli (checkbox)
+    for (let [key, value] of formData.entries()) {
+        if (data[key]) {
+            if (Array.isArray(data[key])) {
+                data[key].push(value);
+            } else {
+                data[key] = [data[key], value];
+            }
+        } else {
+            data[key] = value;
+        }
+    }
+
+    console.log('Dati inviati a Supabase:', data);
+
     const { error } = await supabase
-        .from('risposte')
+        .from('Risposte')
         .insert([data]);
-    if(error) {
+
+    if (error) {
         alert('Errore invio risposte: ' + error.message);
         console.error(error);
     } else {
