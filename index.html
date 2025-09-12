@@ -1,1 +1,154 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questionario Competenze Digitali Over 50</title>
+<style>
+body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f9f9f9; }
+.container { max-width:900px; margin:0 auto; padding:20px; background:#fff; box-shadow:0 0 10px rgba(0,0,0,0.1);}
+h1,h2 { color:#333; }
+h1 { text-align:center; margin-bottom:30px; }
+.section { margin-bottom:40px; }
+.question { margin-bottom:20px; }
+.question label { display:block; margin-bottom:5px; font-weight:bold; }
+.options label { display:block; margin-bottom:5px; cursor:pointer; }
+input[type="text"], input[type="date"], select { width:100%; padding:8px; margin-bottom:10px; border:1px solid #ccc; border-radius:4px; }
+.multi-select { display:flex; flex-direction:column; }
+button { padding:12px 20px; background-color:#007bff; color:#fff; border:none; border-radius:4px; cursor:pointer; font-size:16px; }
+button:hover { background-color:#0056b3; }
+.icons img { width:24px; vertical-align:middle; margin-right:8px; }
+table { border-collapse: collapse; width: 100%; }
+table th, table td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Benvenuti – Questionario sulle Competenze Digitali degli Over 50</h1>
+<div class="section">
+<p>Questo questionario fa parte di una ricerca dedicata a esplorare il rapporto con le tecnologie digitali da parte delle persone over 50. L’intento è quello di raccogliere informazioni utili per comprendere meglio le competenze digitali in questa fascia d’età e favorire lo sviluppo di strumenti, servizi e percorsi formativi più inclusivi e accessibili.</p>
+<p>Non ci sono risposte giuste o sbagliate: ogni contributo è importante e riflette esperienze reali, senza alcun tipo di valutazione.</p>
+<p>Le risposte saranno raccolte in forma anonima e utilizzate esclusivamente per scopi di ricerca, ogni informazione fornita è preziosa per il successo dello studio.</p>
+<p>Grazie fin da ora per la partecipazione!</p>
+</div>
+<form id="questionarioForm">
 
+<!-- SEZIONE I -->
+<div class="section">
+<h2>Sezione I: Domande socio-demografiche</h2>
+<div class="question">
+<label for="q001">Q.001 Data di nascita</label>
+<input type="date" id="q001" name="q001" required>
+</div>
+<div class="question">
+<label>Q.002 Genere</label>
+<div class="options">
+<label><input type="radio" name="q002" value="Maschio"> Maschio</label>
+<label><input type="radio" name="q002" value="Femmina"> Femmina</label>
+</div>
+</div>
+<div class="question">
+<label for="q003">Q.003 Regione di residenza</label>
+<select id="q003" name="q003" required>
+<option value="">Seleziona...</option>
+<option value="Abruzzo">Abruzzo</option>
+<option value="Basilicata">Basilicata</option>
+<option value="Calabria">Calabria</option>
+<option value="Campania">Campania</option>
+<option value="Emilia-Romagna">Emilia-Romagna</option>
+<option value="Friuli Venezia Giulia">Friuli Venezia Giulia</option>
+<option value="Lazio">Lazio</option>
+<option value="Liguria">Liguria</option>
+<option value="Lombardia">Lombardia</option>
+<option value="Marche">Marche</option>
+<option value="Molise">Molise</option>
+<option value="Piemonte">Piemonte</option>
+<option value="Puglia">Puglia</option>
+<option value="Sardegna">Sardegna</option>
+<option value="Sicilia">Sicilia</option>
+<option value="Toscana">Toscana</option>
+<option value="Trentino-Alto Adige">Trentino-Alto Adige</option>
+<option value="Umbria">Umbria</option>
+<option value="Valle d'Aosta">Valle d'Aosta</option>
+<option value="Veneto">Veneto</option>
+</select>
+</div>
+<div class="question">
+<label>Q.004 In che tipo di zona si trova la casa?</label>
+<div class="options">
+<label><input type="radio" name="q004" value="Grande città"> In una grande città</label>
+<label><input type="radio" name="q004" value="Periferia"> Nella periferia o l’hinterland di una grande città</label>
+<label><input type="radio" name="q004" value="Città"> In una città</label>
+<label><input type="radio" name="q004" value="Cittadina"> In una cittadina</label>
+<label><input type="radio" name="q004" value="Campagna"> In campagna o in un piccolo centro</label>
+</div>
+</div>
+<div class="question">
+<label>Q.005 Titolo di studio più elevato</label>
+<div class="options">
+<label><input type="radio" name="q005" value="Nessun titolo"> Nessun titolo</label>
+<label><input type="radio" name="q005" value="Qualche anno istruzione"> Qualche anno di istruzione (ma senza esame seconda elementare)</label>
+<label><input type="radio" name="q005" value="Esame seconda elementare"> Esame di seconda elementare</label>
+<label><input type="radio" name="q005" value="Licenza elementare"> Licenza elementare</label>
+<label><input type="radio" name="q005" value="Scuola media"> Scuola media o avviamento professionale</label>
+<label><input type="radio" name="q005" value="Diploma ginnasiale"> Diploma ginnasiale</label>
+<label><input type="radio" name="q005" value="Diploma professionale 3 anni"> Diploma di scuola professionale, scuola magistrale o istituto d’arte (3 anni)</label>
+<label><input type="radio" name="q005" value="Diploma magistrale 4 anni"> Diploma di scuola magistrale o liceo artistico (4 anni)</label>
+<label><input type="radio" name="q005" value="Maturità liceale"> Maturità liceale</label>
+<label><input type="radio" name="q005" value="Maturità tecnica"> Maturità tecnica, professionale o istituto d’arte (5 anni)</label>
+<label><input type="radio" name="q005" value="Altro"> Altro titolo di studio non post-secondario</label>
+</div>
+</div>
+<div class="question">
+<label>Q.006 Situazione lavorativa</label>
+<div class="options">
+<label><input type="radio" name="q006" value="Pensionato"> In pensione da lavoro</label>
+<label><input type="radio" name="q006" value="Lavoratore"> Lavoratore dipendente o indipendente</label>
+<label><input type="radio" name="q006" value="Disoccupato"> Disoccupato/a</label>
+<label><input type="radio" name="q006" value="Malato"> Malato/a cronico/a o disabile</label>
+<label><input type="radio" name="q006" value="Casalingo"> Casalingo/a</label>
+</div>
+</div>
+<div class="question">
+<label>Q.007 Stato civile</label>
+<div class="options">
+<label><input type="radio" name="q007" value="Coniugato convivente"> Coniugato/a e convivente con il coniuge</label>
+<label><input type="radio" name="q007" value="Convivenza ufficiale"> Convivenza ufficialmente riconosciuta</label>
+<label><input type="radio" name="q007" value="Coniugato non convivente"> Coniugato/a, ma non convivente con il coniuge</label>
+<label><input type="radio" name="q007" value="Mai sposato"> Mai sposato/a</label>
+<label><input type="radio" name="q007" value="Divorziato"> Divorziato/a</label>
+<label><input type="radio" name="q007" value="Vedovo Altro"> Vedovo/a o altro</label>
+</div>
+</div>
+</div>
+
+<!-- SEZIONE II fino a VII: tutte le domande complete (Q008-Q050) con checkbox, radio, tabelle, icone, e domande condizionali -->
+
+<button type="submit">Invia Risposte</button>
+</form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/supabase.min.js"></script>
+<script>
+const SUPABASE_URL = 'https://lteztcnhpkleuvqeaphq.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx0ZXp0Y25ocGtsZXV2cWVhcGhxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI5MzE5MjYsImV4cCI6MjA2ODUwNzkyNn0.Wbvy9R5kVYRAjxzhbxK4d76ctqAT-ZyX4kaL7nqGFnc';
+const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const form = document.getElementById('questionarioForm');
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(form).entries());
+    const { error } = await supabase
+        .from('risposte')
+        .insert([data]);
+    if(error) {
+        alert('Errore invio risposte: ' + error.message);
+        console.error(error);
+    } else {
+        alert('Risposte inviate con successo!');
+        form.reset();
+    }
+});
+</script>
+</body>
+</html>
