@@ -1170,9 +1170,24 @@ Q.unshift({
       if(q.type==='single'){
         saveRows.push(basePayload(q.text, ans, q.correct ?? null));
       }
+      if(q.type === 'date'){
+    if(!ans || isNaN(Date.parse(ans))){
+        $('#helper').text('Inserisci una data valida per continuare.');
+        return false;
+    }
+    saveRows.push(basePayload(q.text, ans, null));
+      }
+
       if(q.type==='multi'){
         saveRows.push(basePayload(q.text, ans.join('; '), q.correct ?? null));
       }
+      if(q.type === 'dropdown'){
+    if(!ans){
+        $('#helper').text('Seleziona un’opzione per continuare.');
+        return false;
+    }
+    saveRows.push(basePayload(q.text, ans, q.correct ?? null));
+    }
       if(q.type==='matrix'){
         // una riga per ciascuna voce
         Object.entries(ans).forEach(([k,v])=>{
