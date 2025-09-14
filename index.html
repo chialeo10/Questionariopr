@@ -117,7 +117,7 @@
   </style>
 </head>
 <body>
-  <div class="title-box">Questionario Competenze Digitali</div>
+  <div class="title-box">Questionario Competenze Digitali over 50</div>
 
   <div class="question-box" id="app">
     <div class="header-row">
@@ -175,6 +175,110 @@
     // Ogni elemento può avere "image" (percorso/URL) mostrato sotto al testo.
 
     const Q = [];
+    // Pagina di benvenuto
+Q.unshift({
+  id: 'welcome_page',
+  section: 'BENVENUTO',
+  text:'<p><strong>Benvenuti – Questionario sulle Competenze Digitali degli Over 50</strong></p><p>Questo questionario fa parte di una ricerca dedicata a esplorare il rapporto con le tecnologie digitali da parte delle persone over 50. L’intento è quello di raccogliere informazioni utili per comprendere meglio le competenze digitali in questa fascia d’età e favorire lo sviluppo di strumenti, servizi e percorsi formativi più inclusivi e accessibili.</p><p>Non ci sono risposte giuste o sbagliate: ogni contributo è importante e riflette esperienze reali, senza alcun tipo di valutazione.</p><p>Le risposte saranno raccolte in forma anonima e utilizzate esclusivamente per scopi di ricerca, ogni informazione fornita è preziosa per il successo dello studio.</p><p>Grazie fin da ora per la partecipazione!</p>',
+  type: 'welcome',
+  required: false,
+  buttonText: 'Inizia' // testo del pulsante
+}); 
+    // Domande sociodemografiche
+     Q.push(
+  {
+    id: 'Q001',
+    section: 'SOCIODemografico',
+    text: 'Data di nascita',
+    type: 'date',
+    required: true,
+  },
+  {
+    id: 'Q002',
+    section: 'SOCIODemografico',
+    text: 'Genere',
+    type: 'single',
+    required: true,
+    options: ['Maschio', 'Femmina']
+  },
+  {
+    id: 'Q003',
+    section: 'SOCIODemografico',
+    text: 'Regione di residenza',
+    type: 'dropdown',
+    required: true,
+    options: [
+      'Piemonte','Valle d’Aosta','Lombardia','Trentino-Alto Adige','Veneto',
+      'Friuli-Venezia Giulia','Liguria','Emilia-Romagna','Toscana','Umbria',
+      'Marche','Lazio','Abruzzo','Molise','Campania','Puglia','Basilicata',
+      'Calabria','Sicilia','Sardegna'
+    ]
+  },
+  {
+    id: 'Q004',
+    section: 'SOCIODemografico',
+    text: 'In che tipo di zona si trova la casa?\n(Per "grande città" si intende un comune con popolazione >500.000; per "periferia o hinterland" si intende un comune confinante con grande città; ecc.)',
+    type: 'single',
+    required: true,
+    options: [
+      'In una grande città',
+      'Nella periferia o l’hinterland di una grande città',
+      'In una città',
+      'In una cittadina',
+      'In campagna o in un piccolo centro'
+    ]
+  },
+  {
+    id: 'Q005',
+    section: 'SOCIODemografico',
+    text: 'Fra quelli elencati, qual è il titolo di studio più elevato da Lei ottenuto?',
+    type: 'single',
+    required: true,
+    options: [
+      'Nessun titolo',
+      'Qualche anno di istruzione (ma senza aver conseguito l\'esame di seconda elementare)',
+      'Esame di seconda elementare',
+      'Licenza elementare',
+      'Scuola media o avviamento professionale',
+      'Diploma ginnasiale',
+      'Diploma di scuola professionale, scuola magistrale o istituto d’arte (3 anni)',
+      'Diploma di scuola magistrale o liceo artistico (4 anni)',
+      'Maturità liceale (classico, scientifico, linguistico, artistico, socio-psico-pedagogico)',
+      'Maturità tecnica, professionale o istituto d’arte (5 anni)',
+      'Altro titolo di studio non post-secondario'
+    ]
+  },
+  {
+    id: 'Q006',
+    section: 'SOCIODemografico',
+    text: 'Quale delle seguenti categorie descrive meglio la sua attuale situazione lavorativa?',
+    type: 'single',
+    required: true,
+    options: [
+      'In pensione da lavoro',
+      'Lavoratore dipendente o indipendente (incluso lavoro in attività di famiglia)',
+      'Disoccupato/a',
+      'Malato/a cronico/a o disabile',
+      'Casalingo/a'
+    ]
+  },
+  {
+    id: 'Q007',
+    section: 'SOCIODemografico',
+    text: 'Qual è il suo stato civile?\n(La risposta "mai sposato" comprende anche celibe e nubile.)',
+    type: 'single',
+    required: true,
+    options: [
+      'Coniugato/a e convivente con il coniuge',
+      'Convivenza ufficialmente riconosciuta',
+      'Coniugato/a, ma non convivente con il coniuge',
+      'Mai sposato/a',
+      'Divorziato/a',
+      'Vedovo/a',
+      'Altro (benestante, che vive di rendita, studente, che fa volontariato)'
+    ]
+  }
+);
 
     // ====== BLOCCO: DISPOSITIVI ======
     Q.push(
@@ -762,13 +866,38 @@
         return;
       }
       const q = V[state.index];
+      if(q.type === 'welcome') {
+  $('#q-wrap').html(`
+    <div class="pill">${q.section}</div>
+    <div class="question-title">${q.text.replace(/\n/g, '<br>')}</div>
+    ${q.image ? `<div class="img-wrap"><img src="${q.image}" alt="Benvenuto" /></div>` : ''}
+  `);
+
+  // Nascondi il pulsante "Indietro"
+  $('#backBtn').addClass('hidden');
+
+  // Cambia il testo del pulsante "Avanti" in "Inizia"
+  $('#nextBtn').text(q.buttonText || 'Avanti');
+
+  $('#helper').text('');
+  updateProgress();
+  return;
+}
       const name = $('#user-name').val().trim();
       const imgHtml = q.image ? `<div class="img-wrap"><img id="question-image" src="${q.image}" alt="Immagine associata alla domanda"/></div>` : '';
 
       let content = `<div class="pill">${q.section}</div><div class="question-title">${q.text}</div>${imgHtml}`;
 
       const val = state.answers[q.id];
-
+      if(q.type === 'date') {
+        content += `<input type="date" id="answer" value="${val || ''}" style="padding:10px;border:1px solid #e5e7eb;border-radius:8px;width:100%;margin-top:6px"/>`;
+      }
+      if(q.type === 'dropdown'){
+  content += `<select id="answer" style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:8px;margin-top:6px">
+      <option value="">Seleziona...</option>
+      ${q.options.map(op => `<option value="${op}" ${val===op?'selected':''}>${op}</option>`).join('')}
+    </select>`;
+      }
       if(q.type==='single'){
         content += `<div class="options">` + q.options.map((op,i)=>{
           const id=`${q.id}_opt_${i}`;
@@ -921,6 +1050,12 @@
     }
 
     function readAnswer(q){
+      if(q.type === 'date') {
+        return document.getElementById('answer').value;  // restituisce tipo "YYYY-MM-DD"
+      }
+      if(q.type === 'dropdown'){
+  return document.getElementById('answer').value || null;
+      }
       if(q.type==='single'){
         const v = $(`input[name="${q.id}"]:checked`).val();
         return v || null;
@@ -988,6 +1123,9 @@
     function validateAndSave(){
       const V = visibleQuestions();
       const q = V[state.index];
+      // Salta la validazione per la pagina di benvenuto
+      if(q.type === 'welcome') return true;
+
 
       // nome richiesto
       const nome = ($('#user-name').val()||'').trim();
@@ -1084,6 +1222,9 @@
       const V = visibleQuestions();
       state.history.push(state.index);
       state.index = Math.min(state.index+1, V.length);
+      // Ripristina testo e pulsante Indietro per le domande successive
+$('#nextBtn').text('Avanti');
+$('#backBtn').removeClass('hidden');
       renderCurrent();
     });
 
@@ -1109,7 +1250,6 @@
   </script>
 </body>
 </html>
-
 
 
 
