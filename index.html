@@ -1,69 +1,32 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Questionario Competenze Digitali Over 50</title>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
-        }
-        .container {
-            max-width: 800px;
-            margin: auto;
-            background: white;
-            padding: 20px;
-            margin-top: 40px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            border-radius: 8px;
-        }
-        h1, h2 {
-            text-align: center;
-        }
-        .page {
-            display: none;
-        }
-        .page.active {
-            display: block;
-        }
-        .navigation {
-            margin-top: 20px;
-            text-align: center;
-        }
-        .navigation button {
-            padding: 10px 20px;
-            margin: 5px;
-            border: none;
-            border-radius: 5px;
-            background-color: #007bff;
-            color: white;
-            cursor: pointer;
-        }
-        .navigation button:hover {
-            background-color: #0056b3;
-        }
-        label {
-            display: block;
-            margin-top: 10px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questionario Over 50</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+    body { font-family: Arial, sans-serif; background-color: #f5f5f5; margin: 0; padding: 0; }
+    .container { max-width: 800px; margin: auto; background: white; padding: 20px; margin-top: 40px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1);}
+    .page { display: none; }
+    .page.active { display: block; }
+    h1, h2 { text-align: center; }
+    .navigation { text-align: center; margin-top: 20px; }
+    .navigation button { padding: 10px 20px; margin: 5px; border: none; border-radius: 5px; background-color: #007bff; color: white; cursor: pointer; }
+    .navigation button:hover { background-color: #0056b3; }
+    label { display: block; margin-top: 10px; }
+</style>
 </head>
 <body>
 
 <div class="container">
+
     <!-- Pagina 1: Benvenuto -->
     <div class="page active" id="page-1">
         <h1>Benvenuti</h1>
         <p>
-            Questo questionario fa parte di una ricerca dedicata a esplorare il rapporto con le tecnologie digitali da parte delle persone over 50. 
-            L’intento è quello di raccogliere informazioni utili per comprendere meglio le competenze digitali in questa fascia d’età e favorire lo sviluppo di strumenti, servizi e percorsi formativi più inclusivi e accessibili.
-        </p>
-        <p>
-            Non ci sono risposte giuste o sbagliate: ogni contributo è importante e riflette esperienze reali, senza alcun tipo di valutazione.
+            Questo questionario fa parte di una ricerca dedicata a esplorare il rapporto con le tecnologie digitali da parte delle persone over 50.
+            Non ci sono risposte giuste o sbagliate: ogni contributo è importante.
         </p>
         <p>
             Le risposte saranno raccolte in forma anonima e utilizzate esclusivamente per scopi di ricerca.
@@ -83,7 +46,7 @@
 
             <label>Q.002 Genere:</label>
             <label><input type="radio" name="Q002" value="Maschio" required> Maschio</label>
-            <label><input type="radio" name="Q002" value="Femmina" required> Femmina</label>
+            <label><input type="radio" name="Q002" value="Femmina"> Femmina</label>
 
             <label>Q.003 Regione di residenza:
                 <input type="text" name="Q003" required>
@@ -134,43 +97,32 @@
         </form>
     </div>
 
-    <!-- SPAZIO PER ALTRE SEZIONI -->
-    <!--
-        Per aggiungere altre sezioni:
-        1. Copia il div "page" e cambiane l'id (es. page-3, page-4...)
-        2. Inserisci le domande come input, radio o checkbox all'interno del form
-        3. Aggiorna le funzioni nextPage() e submitForm() se vuoi gestire submit separati
-    -->
-
 </div>
 
 <script>
-    // Configura Supabase
-    const supabaseUrl = "INSERISCI_LA_TUA_SUPABASE_URL";
-    const supabaseKey = "INSERISCI_LA_TUA_ANON_KEY";
+    // Supabase config
+    const supabaseUrl = 'https://lteztcnhpkleuvqeaphq.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx0ZXp0Y25ocGtsZXV2cWVhcGhxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI5MzE5MjYsImV4cCI6MjA2ODUwNzkyNn0.Wbvy9R5kVYRAjxzhbxK4d76ctqAT-ZyX4kaL7nqGFnc';
     const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-    function nextPage(pageNumber) {
+    function nextPage(pageNumber){
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById(`page-${pageNumber}`).classList.add('active');
+        window.scrollTo(0,0); // porta in cima alla pagina
     }
 
-    async function submitForm() {
+    async function submitForm(){
         const form = document.getElementById('questionarioForm');
         const formData = new FormData(form);
-        for (let [key, value] of formData.entries()) {
-            const { data, error } = await supabase
-                .from('Risposte')
-                .insert([{ 
-                    nome: 'anonimo', // Modifica se vuoi inserire il nome del partecipante
-                    domande: key,
-                    risposta: value,
-                    corretto: null,
-                    esito: null
-                }]);
-            if (error) {
-                console.error("Errore inserimento Supabase:", error);
-            }
+        for(let [key,value] of formData.entries()){
+            const { data, error } = await supabase.from('Risposte').insert([{
+                nome: 'anonimo',
+                domande: key,
+                risposta: value,
+                corretto: null,
+                esito: null
+            }]);
+            if(error) console.error("Errore Supabase:", error);
         }
         alert("Sezione inviata con successo!");
         form.reset();
