@@ -217,7 +217,7 @@ Q.unshift({
   {
     id: 'Q004',
     section: 'SOCIODemografico',
-    text: 'In che tipo di zona si trova la casa?\n(Per "grande città" si intende un comune con popolazione >500.000; per "periferia o hinterland" si intende un comune confinante con grande città; ecc.)',
+    text: '<p><strong>In che tipo di zona si trova la casa?</p>\n<p>(Per "grande città" si intende un comune con una popolazione superiore a 500.000 abitanti.</p><p>Per "periferia o hinterland di una grande città" si intende un comune di qualsiasi grandezza confinante o adiacente ad una grande città.</p><p>Per "città" si intende un comune con una popolazione compresa fra 40.000 e 500.000 abitanti.</p><p>Per "cittadina" si intende un comune con una popolazione compresa fra 20.000 e 40.000 abitanti.</p><p>Per "campagna o piccolo centro" si intende un comune con una popolazione inferiore a 20.000 abitanti)</p>',
     type: 'single',
     required: true,
     options: [
@@ -341,7 +341,7 @@ Q.unshift({
         id:'Q015',
         showIf:{id:'Q008', includes:'Computer fisso o portatile'},
         section:'DISPOSITIVI',
-        text:'(Computer) Chi ti ha insegnato ad utilizzare il computer?',
+        text:' Chi ti ha insegnato ad utilizzare il computer?',
         type:'multi',
         options:['insegnante','famiglia','libri','autodidatta','colleghi','amici','tutorial online','altri'],
         image:null
@@ -350,7 +350,7 @@ Q.unshift({
         id:'Q016',
         showIf:{id:'Q008', includes:'Computer fisso o portatile'},
         section:'DISPOSITIVI',
-        text:'Quale sistema operativo utilizza il tuo computer',
+        text:'Quale sistema operativo possiede il tuo computer',
         type:'single',
         required: true,
         options: [
@@ -383,7 +383,7 @@ Q.unshift({
         id:'Q018',
         showIf:{id:'Q008', includes:'Computer fisso o portatile'},
         section:'DISPOSITIVI',
-        text:'(Computer) Quali app usi più frequentemente? (Risposta multipla)',
+        text:' Quali app usi più frequentemente? (Risposta multipla)',
         type:'multi',
         options:['Suite Office (Word, Excel, ecc.)','App per videoconferenze (Zoom, Teams, Meet, ecc.)','App per note e organizzazione (Evernote, Notion, ecc.)','App per gestione di progetti'],
         allowOther:true,
@@ -393,7 +393,7 @@ Q.unshift({
         id:'Q019',
         showIf:{id:'Q018', includes:'Suite Office (Word, Excel, ecc.)'},
         section:'DISPOSITIVI',
-        text:'(Suite Office) Quale programma della Suite Office utilizzi di più? (Scelta multipla)',
+        text:' Quale programma della Suite Office utilizzi di più? (Scelta multipla)',
         type:'multi',
         options:['Microsoft Word','Microsoft Excel','Microsoft PowerPoint','Microsoft OneNote'],
         allowOther:true,
@@ -406,7 +406,7 @@ Q.unshift({
           {id:'Q008', includes:'Smartphone'},
         ],
         section:'DISPOSITIVI',
-        text:'Quale sistema operativo utilizza il tuo Smartphone o Tablet',
+        text:'Quale sistema operativo utilizza il tuo Smartphone ',
         type:'single',
         required: true,
         options: [
@@ -440,7 +440,7 @@ Q.unshift({
           {id:'Q008', includes:'Tablet / iPad'}
         ],
         section:'DISPOSITIVI',
-        text:'Che cos’è il T9 nei telefoni cellulari?',
+        text:'Che cos’è il T9 negli Smartphone?',
         type:'single',
         options:[
           'Un sistema di scrittura predittiva che suggerisce le parole mentre digiti',
@@ -648,7 +648,7 @@ Q.unshift({
         id:'Q038',
         showIf:{id:'Q037', equals:'Sì'},
         section:'LAVORO',
-        text:'(Se lavori) Rispondi Sì/No alle seguenti domande:',
+        text:'Rispondi Sì/No alle seguenti domande:',
         type:'ynList',
         items:[
           'Hai mai utilizzato computer o Internet per lavoro?',
@@ -717,6 +717,7 @@ Q.unshift({
           'Tr*9kLm!28#q',
           '1234567'
         ],
+        correct:'Tr*9kLm!28#q',
         image:null
       }
     );
