@@ -321,7 +321,7 @@ Q.unshift({
       },
       // Per ogni dispositivo selezionato chiediamo 3 sotto-domande (matrice ripetuta)
       {
-        id:'disp_meta_perdevice',
+        id:'Q012_Q013_Q014',
         showIf:{id:'Q008', inSelected:[
           'Computer fisso o portatile','Smartphone','Tablet / iPad','Smart TV'
         ]},
@@ -336,22 +336,105 @@ Q.unshift({
         ],
         image:null
       },
-      // Domande aggiuntive per Smartphone/Tablet
+      // Domande aggiuntive per Computer
       {
-        id:'disp_smart_activities',
-        showIfAny:[
-          {id:'Q008', includes:'Smartphone'},
-          {id:'Q008', includes:'Tablet / iPad'}
-        ],
+        id:'Q015',
+        showIf:{id:'Q008', includes:'Computer fisso o portatile'},
         section:'DISPOSITIVI',
-        text:'(Smartphone/Tablet) Quali sono le principali attività che svolgi con questo dispositivo? (Risposta multipla)',
+        text:'(Computer) Chi ti ha insegnato ad utilizzare il computer?',
         type:'multi',
-        options:['Chiamate e messaggi','Social network','Giochi','Video / streaming','Navigazione internet','Lavoro / studio','Fotografia e video'],
+        options:['insegnante','famiglia','libri','autodidatta','colleghi','amici','tutorial online','altri'],
+        image:null
+      },
+      {
+        id:'Q016',
+        showIf:{id:'Q008', includes:'Computer fisso o portatile'},
+        section:'DISPOSITIVI',
+        text:'Quale sistema operativo utilizza il tuo computer',
+        type:'single',
+        required: true,
+        options: [
+        'IOS',
+        'Windows',
+        'Linux',
+        'Altro',
+        'Non lo so'
+      ],
+        image:null
+      },
+      {
+        id:'Q017',
+        showIf:{id:'Q008', includes:'Computer fisso o portatile'},
+        section:'DISPOSITIVI',
+        text:'Quale browser (sistema di ricerca) utilizzi sul tuo computer?',
+        type:'multi',
+        required: true,
+        options: [
+        'Google Chrome',
+        'Safari',
+        'Microsoft Edge',
+        'Mozilla Firefox',
+        'Altro',
+        'Non lo so'
+      ],
+        image:null
+      },
+      {
+        id:'Q018',
+        showIf:{id:'Q008', includes:'Computer fisso o portatile'},
+        section:'DISPOSITIVI',
+        text:'(Computer) Quali app usi più frequentemente? (Risposta multipla)',
+        type:'multi',
+        options:['Suite Office (Word, Excel, ecc.)','App per videoconferenze (Zoom, Teams, Meet, ecc.)','App per note e organizzazione (Evernote, Notion, ecc.)','App per gestione di progetti'],
         allowOther:true,
         image:null
       },
       {
-        id:'disp_t9',
+        id:'Q019',
+        showIf:{id:'Q018', includes:'Suite Office (Word, Excel, ecc.)'},
+        section:'DISPOSITIVI',
+        text:'(Suite Office) Quale programma della Suite Office utilizzi di più? (Scelta multipla)',
+        type:'multi',
+        options:['Microsoft Word','Microsoft Excel','Microsoft PowerPoint','Microsoft OneNote'],
+        allowOther:true,
+        image:null
+      },
+      // Domande aggiuntive per Smartphone/Tablet
+      {
+         id:'Q020',
+       showIfAny:[
+          {id:'Q008', includes:'Smartphone'},
+        ],
+        section:'DISPOSITIVI',
+        text:'Quale sistema operativo utilizza il tuo Smartphone o Tablet',
+        type:'single',
+        required: true,
+        options: [
+        'IOS',
+        'Windows mobile',
+        'Android',
+        'Altro',
+        'Non lo so']
+      },
+      {
+         id:'Q021',
+       showIfAny:[
+          {id:'Q008', includes:'Smartphone'},
+        ],
+        section:'DISPOSITIVI',
+        text:'Quale browser (sistema di ricerca) utilizzi sul tuo Smartphone?',
+        type:'multi',
+        required: true,
+        options: [
+        'Google Chrome',
+        'Safari',
+        'Samsung Internet',
+        'Mozilla Firefox',
+        'Altro',
+        'Non lo so']
+      },
+      {
+        id:'Q022',
         showIfAny:[
           {id:'Q008', includes:'Smartphone'},
           {id:'Q008', includes:'Tablet / iPad'}
@@ -369,68 +452,24 @@ Q.unshift({
         correct:'Un sistema di scrittura predittiva che suggerisce le parole mentre digiti',
         image:null
       },
-      // Domande aggiuntive per Computer
       {
-        id:'pc_chi_insegna',
-        showIf:{id:'Q008', includes:'Computer fisso o portatile'},
-        section:'DISPOSITIVI',
-        text:'(Computer) Chi ti ha insegnato ad utilizzare il computer?',
-        type:'multi',
-        options:['insegnante','famiglia','libri','autodidatta','colleghi','amici','tutorial online','altri'],
-        image:null
-      },
-      {
-        id:'pc_per_cosa',
-        showIf:{id:'Q008', includes:'Computer fisso o portatile'},
-        section:'DISPOSITIVI',
-        text:'(Computer) Per cosa lo utilizzi?',
-        type:'matrix',
-        rows:['Lavoro','Studio','Navigazione internet','Gaming','Grafica / montaggio video','Programmazione / sviluppo software','Altro (specificare)'],
-        rowOther:true,
-        columns:['Giornalmente','3-4 volte a settimana','1-2 volte a settimana','1-2 volte al mese','Raramente','Mai'],
-        image:null
-      },
-      {
-        id:'pc_app_frequenti',
-        showIf:{id:'Q008', includes:'Computer fisso o portatile'},
-        section:'DISPOSITIVI',
-        text:'(Computer) Quali app usi più frequentemente? (Risposta multipla)',
-        type:'multi',
-        options:['Suite Office (Word, Excel, ecc.)','App per videoconferenze (Zoom, Teams, Meet, ecc.)','App per note e organizzazione (Evernote, Notion, ecc.)','App per gestione di progetti','Altro (specificare)'],
-        allowOther:true,
-        image:null
-      },
-      {
-        id:'pc_suite_which',
-        showIf:{id:'pc_app_frequenti', includes:'Suite Office (Word, Excel, ecc.)'},
-        section:'DISPOSITIVI',
-        text:'(Suite Office) Quale programma della Suite Office utilizzi di più? (Scelta multipla)',
-        type:'multi',
-        options:['Microsoft Word','Microsoft Excel','Microsoft PowerPoint','Microsoft OneNote','Altro (specificare)'],
-        allowOther:true,
-        image:null
-      },
-      {
-        id:'pc_suite_use',
-        showIf:{id:'pc_app_frequenti', includes:'Suite Office (Word, Excel, ecc.)'},
-        section:'DISPOSITIVI',
-        text:'Per quali attività utilizzi la Suite Office? (Scelte multiple)',
-        type:'multi',
-        options:[
-          'Scrivere documenti o relazioni',
-          'Creare fogli di calcolo e grafici',
-          'Preparare presentazioni',
-          'Collaborare in tempo reale con altre persone',
-          'Organizzare attività domestiche (es. lista della spesa, gestione budget familiare)',
-          'Lavoro d’ufficio',
-          'Altro (specificare)'
+         id:'Q023',
+       showIfAny:[
+          {id:'Q008', includes:'Smartphone'},
+          {id:'Q008', includes:'Tablet / iPad'}
         ],
-        allowOther:true,
-        image:null
+        section:'DISPOSITIVI',
+        text:'Sai cosa è uno screenshot?',
+        type:'single',
+        required: true,
+        options: [
+        'Si',
+        'No',
+        ]
       },
       // Domande aggiuntive per Smart TV
       {
-        id:'tv_cosa_guardi',
+        id:'Q024',
         showIf:{id:'Q008', includes:'Smart TV'},
         section:'DISPOSITIVI',
         text:'(Smart TV) Cosa guardi principalmente? (Risposta multipla)',
@@ -446,7 +485,7 @@ Q.unshift({
         image:null
       },
       {
-        id:'tv_quanto_spesso',
+        id:'Q025',
         showIf:{id:'Q008', includes:'Smart TV'},
         section:'DISPOSITIVI',
         text:'(Smart TV) Quanto spesso utilizzi le funzioni “smart” della TV?',
@@ -459,7 +498,7 @@ Q.unshift({
     // ====== BLOCCO: INTERNET ======
     Q.push(
       {
-        id:'net_conn',
+        id:'Q026',
         section:'INTERNET',
         text:'Tramite quale connessione accedi a Internet? (Scelta multipla)',
         type:'multi',
@@ -468,17 +507,17 @@ Q.unshift({
       },
       // Se "Non utilizzo Internet" è selezionato, le sotto-domande internet si saltano.
       {
-        id:'net_acquisti_3m',
-        showIfNotSelected:{id:'net_conn', value:'Non utilizzo Internet'},
+        id:'Q027',
+        showIfNotSelected:{id:'Q026', value:'Non utilizzo Internet'},
         section:'INTERNET',
         text:'Negli ultimi 3 mesi hai utilizzato Internet per acquistare beni o servizi?',
         type:'single',
-        options:['Sì','No'],
+        options:['Sì','No','Non rispondo'],
         image:null
       },
       {
-        id:'net_acquisti_freq',
-        showIf:{id:'net_acquisti_3m', equals:'Sì'},
+        id:'Q028',
+        showIf:{id:'Q027', equals:'Sì'},
         section:'INTERNET',
         text:'Per cosa hai usato Internet negli acquisti? (Frequenza per ciascuna voce)',
         type:'matrix',
@@ -495,40 +534,41 @@ Q.unshift({
         image:null
       },
       {
-        id:'net_comms_3m',
-        showIfNotSelected:{id:'net_conn', value:'Non utilizzo Internet'},
+        id:'Q029',
+        showIfNotSelected:{id:'Q026', value:'Non utilizzo Internet'},
         section:'INTERNET',
         text:'Negli ultimi 3 mesi hai utilizzato Internet per comunicare con altre persone?',
         type:'single',
-        options:['Sì','No'],
+        options:['Sì','No','Non rispondo'],
         image:null
       },
       {
-        id:'net_comms_channels',
-        showIf:{id:'net_comms_3m', equals:'Sì'},
+        id:'Q030',
+        showIf:{id:'Q029', equals:'Sì'},
         section:'INTERNET',
-        text:'Quali strumenti online hai utilizzato per comunicare con altre persone negli ultimi 3 mesi?',
-        type:'multi',
-        options:[
+        text:' Con quale frequenza hai svolto le seguenti attività online hai svolto per comunicare con altre persone ? ',
+        type:'matrix',
+        rows:[
           'Inviare o leggere e-mail',
-          'Fare videochiamate (Skype, Facetime, WhatsApp video)',
+          'Fare videochiamate (Meet,Zoom, Facetime, WhatsApp video)',
           'Chattare su servizi di messaggistica istantanea (WhatsApp, Telegram, Messenger)',
           'Usare social network per comunicare (Facebook, Instagram, LinkedIn)'
         ],
+        columns:['Giornalmente','3-4 volte a settimana','1-2 volte a settimana','1-2 volte al mese','Raramente','Mai'],
         image:null
       },
       {
-        id:'net_info_3m',
-        showIfNotSelected:{id:'net_conn', value:'Non utilizzo Internet'},
+        id:'Q031',
+        showIfNotSelected:{id:'Q026', value:'Non utilizzo Internet'},
         section:'INTERNET',
         text:'Negli ultimi 3 mesi hai utilizzato Internet per informarti o cercare contenuti?',
         type:'single',
-        options:['Sì','No'],
+        options:['Sì','No','Non rispondo'],
         image:null
       },
       {
-        id:'net_info_types',
-        showIf:{id:'net_info_3m', equals:'Sì'},
+        id:'Q032',
+        showIf:{id:'Q031', equals:'Sì'},
         section:'INTERNET',
         text:'Quali tipi di contenuti hai cercato? (Frequenza per ciascuna voce)',
         type:'matrix',
@@ -541,46 +581,72 @@ Q.unshift({
           'Cercare indicazioni stradali o mappe',
           'Seguire i mercati finanziari'
         ],
-        columns:['Giornalmente','3-4 volte a settimana','1-2 volte a settimana','1-2 volte al mese','Raramente','Mai'],
+        columns:['Giornalmente','3-4 volte a settimana','1-2 volte a settimana','1-2 volte al mese','Raramente','Mai fatto'],
         image:null
       },
       {
-        id:'net_pubserv_3m',
-        showIfNotSelected:{id:'net_conn', value:'Non utilizzo Internet'},
+        id:'Q033',
+        showIfNotSelected:{id:'Q026', value:'Non utilizzo Internet'},
         section:'INTERNET',
         text:'Negli ultimi 3 mesi hai utilizzato Internet per servizi pubblici?',
         type:'single',
-        options:['Sì','No'],
+        options:['Sì','No','Non rispondo'],
         image:null
       },
       {
-        id:'net_pubserv_how',
-        showIf:{id:'net_pubserv_3m', equals:'Sì'},
+        id:'Q034',
+        showIf:{id:'Q033', equals:'Sì'},
         section:'INTERNET',
         text:'In che modo?',
-        type:'multi',
-        options:[
+        type:'matrix',
+        rows:[
           'Prenotare visite mediche online',
           'Accedere a servizi pubblici digitali (SPID, CIE, Fascicolo Sanitario, Agenzia delle Entrate, INPS)',
           'altro'
         ],
+        columns:['Giornalmente','3-4 volte a settimana','1-2 volte a settimana','1-2 volte al mese','Raramente','Mai fatto'],
         image:null
-      }
+      },
+      {
+        id:'Q035',
+        showIfNotSelected:{id:'Q026', value:'Non utilizzo Internet'},
+        section:'INTERNET',
+        text:'Negli ultimi 3 mesi hai utilizzato Internet per la gestione del patrimonio o per condurre investimenti online?',
+        type:'single',
+        options:['Sì','No','Non rispondo'],
+        image:null
+      },
+      {
+        id:'Q036',
+        showIf:{id:'Q035', equals:'Sì'},
+        section:'INTERNET',
+        text:'Indica con che frequenza svolgi le seguenti operazioni.',
+        type:'matrix',
+        rows:[
+          'Accedi al tuo conto online per controllare il saldo',
+          'Utilizzi app per monitorare le tue spese personali',
+          'Usi lo smartphone per effettuare bonifici o pagamenti',
+          'Controlli o ricevi notifiche sull’andamento dei mercati azionari tramite app o siti',
+          'Effettui operazioni di acquisto o vendita di azioni'
+        ],
+        columns:['Giornalmente','3-4 volte a settimana','1-2 volte a settimana','1-2 volte al mese','Raramente','Mai fatto'],
+        image:null
+      },
     );
 
     // ====== BLOCCO: LAVORO ======
     Q.push(
       {
-        id:'job_now',
+        id:'Q037',
         section:'LAVORO',
         text:'Attualmente svolgi attività lavorativa?',
         type:'single',
-        options:['Sì','No'],
+        options:['Sì','No','Non rispondo'],
         image:null
       },
       {
-        id:'job_yn_list',
-        showIf:{id:'job_now', equals:'Sì'},
+        id:'Q038',
+        showIf:{id:'Q037', equals:'Sì'},
         section:'LAVORO',
         text:'(Se lavori) Rispondi Sì/No alle seguenti domande:',
         type:'ynList',
@@ -595,8 +661,8 @@ Q.unshift({
         image:null
       },
       {
-        id:'job_skills_matrix',
-        showIf:{id:'job_now', equals:'Sì'},
+        id:'Q039',
+        showIf:{id:'Q037', equals:'Sì'},
         section:'LAVORO',
         text:'Come valuteresti le tue competenze informatiche nel lavoro?',
         type:'matrix',
@@ -618,18 +684,18 @@ Q.unshift({
     // ====== BLOCCO: SICUREZZA ======
     Q.push(
       {
-        id:'sec_precauzioni',
+        id:'Q040',
         section:'SICUREZZA',
         text:'Solitamente prendi precauzioni per proteggere i tuoi dati online?',
         type:'single',
-        options:['Sì','No'],
+        options:['Sì','No','Non rispondo'],
         image:null
       },
       {
-        id:'sec_pratiche',
-        showIf:{id:'sec_precauzioni', equals:'Sì'},
+        id:'Q041',
+        showIf:{id:'Q040', equals:'Sì'},
         section:'SICUREZZA',
-        text:'Se Sì: seleziona le pratiche che adotti (Sì/No per ciascuna).',
+        text:'Seleziona le pratiche che adotti (Sì/No per ciascuna).',
         type:'ynList',
         items:[
           'Utilizzi password complesse e diverse?',
@@ -640,53 +706,53 @@ Q.unshift({
         image:null
       },
       {
-        id:'sec_password_order',
-  section:'SICUREZZA',
-  text:'Assegna un numero da 1 (più sicura) a 4 (meno sicura) a ciascuna password.',
-  type:'matrix',
-  rows:[
-    'Maria1970',
-    'Tr*9kLm!28#q',
-    '12345678',
-    'P4ssw0rd!'
-  ],
-  columns:['1','2','3','4'],
-  image:null
+        id:'Q042',
+        showIf:{id:'Q040', equals:'Sì'},
+        section:'SICUREZZA',
+        text:'Quale password ti sembra più sicura?',
+        type:'single',
+        options:[
+          'P4ssw0rd!',
+          'Maria1970',
+          'Tr*9kLm!28#q',
+          '1234567'
+        ],
+        image:null
       }
     );
 
     // ====== BLOCCO: ICONE / CONOSCENZE ======
     Q.push(
       {
-        id:'ico_lock',
+        id:'Q043',
         section:'ICONE',
         text:' Quando compare questo simbolo vicino all’indirizzo di un sito web, cosa significa?',
         type:'single',
         options:[
-          'A. La connessione tra il tuo dispositivo e il sito è sicura',
-          'B. Il sito è stato visitato di recente',
-          'C. Il sito è a pagamento',
+          'A. Il sito è stato visitato di recente',
+          'B. Il sito è a pagamento',
+          'C. La connessione tra il tuo dispositivo e il sito è sicura',
           'D. Il sito non funziona senza password'
         ],
         correct:'A. La connessione tra il tuo dispositivo e il sito è sicura',
         image:'www/lucchetto.jpg'
       },
       {
-        id:'ico_gear',
+        id:'Q044',
         section:'ICONE',
         text:'Cosa permette di fare questa icona sullo smartphone o computer?',
         type:'single',
         options:[
-          'A. Aprire il menu delle impostazioni',
-          'B. Avviare la fotocamera',
-          'C. Spegnere il dispositivo',
-          'D. Aggiornare un’applicazione'
+          'A. Avviare la fotocamera',
+          'B. Spegnere il dispositivo',
+          'C. Aggiornare un’applicazione',
+          'D. Aprire il menu delle impostazioni'
         ],
         correct:'A. Aprire il menu delle impostazioni',
         image:'www/ingranaggio.jpg'
       },
       {
-        id:'ico_mail',
+        id:'Q045',
         section:'ICONE',
         text:' Cosa rappresenta solitamente questa icona?',
         type:'single',
@@ -700,21 +766,21 @@ Q.unshift({
         image:'www/email.jpg'
       },
       {
-        id:'ico_wifi',
+        id:'Q046',
         section:'ICONE',
         text:'Quando questa icona è piena e luminosa, cosa indica?',
         type:'single',
         options:[
-          'A. Sei connesso a Internet tramite rete wireless',
-          'B. Il dispositivo sta scaricando dati',
-          'C. È attiva la connessione Bluetooth',
+          'A. Il dispositivo sta scaricando dati',
+          'B. È attiva la connessione Bluetooth',
+          'C. Sei connesso a Internet tramite rete wireless',
           'D. Stai guardando un video in streaming'
         ],
         correct:'A. Sei connesso a Internet tramite rete wireless',
         image:'www/wifi.png'
       },
       {
-        id:'ico_bt',
+        id:'Q047',
         section:'ICONE',
         text:' A cosa serve questa funzione su smartphone, tablet o computer?',
         type:'single',
@@ -728,13 +794,13 @@ Q.unshift({
         image:'www/blue.jpg'
       },
       {
-        id:'ico_qr',
+        id:'Q048',
         section:'ICONE',
         text:' Cosa puoi fare con questo tipo di codice?',
         type:'single',
         options:[
-          'A. Scansionarlo per aprire un link, ottenere informazioni o accedere a un servizio',
-          'B. Usarlo per aumentare la velocità di connessione Internet',
+          'A. Usarlo per aumentare la velocità di connessione Internet',
+          'B. Scansionarlo per aprire un link, ottenere informazioni o accedere a un servizio',
           'C. Inserirlo come password per accedere al computer',
           'D. Stamparlo per decorare un documento'
         ],
@@ -742,11 +808,11 @@ Q.unshift({
         image:'www/download.png'
       },
       {
-        id:'ico_cpu',
+        id:'Q049',
         section:'ICONE',
         text:'Qual è il “cervello principale” del computer?',
         type:'single',
-        options:['CPU','LAN','RAM','ROM'],
+        options:[,'LAN','RAM','CPU','ROM'],
         correct:'CPU',
         image:null
       }
@@ -755,7 +821,7 @@ Q.unshift({
     // ====== BLOCCO: FINALI (Likert) ======
     Q.push(
       {
-        id:'final_likert',
+        id:'Q050',
         section:'FINALE',
         text:'Indica in che misura sei d’accordo con le seguenti affermazioni.',
         type:'matrix',
