@@ -114,6 +114,17 @@
     .rank-item{padding:10px 12px;border:1px solid #e5e7eb;border-radius:10px;background:#fff;cursor:grab}
     .rank-item.dragging{opacity:.6}
     .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    /* Rendere scrollabili le tabelle matrix su schermi piccoli */
+.matrix-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.matrix {
+  min-width: 600px; /* evita che le colonne si comprimano troppo */
+  width: 100%;
+  border-collapse: collapse;
+}
   </style>
 </head>
 <body>
@@ -816,7 +827,18 @@ Q.unshift({
         options:[,'LAN','RAM','CPU','ROM'],
         correct:'CPU',
         image:null
+      },
+      {
+        id: 'Q051',
+        section: 'COMPETENZE',
+        type: 'task',
+        text: 'Copia il testo mostrato qui sotto e incollalo nel campo di testo. Se non sei in grado di completare l’attività, puoi lasciare il campo vuoto oppure digitare "non lo so".',
+        taskKind: 'copypaste',
+        taskText: 'Digitalizzazione',
+        correct: 'Digitalizzazione',
+        skippable: true 
       }
+
     );
 
     // ====== BLOCCO: FINALI (Likert) ======
@@ -964,6 +986,26 @@ Q.unshift({
       ${q.options.map(op => `<option value="${op}" ${val===op?'selected':''}>${op}</option>`).join('')}
     </select>`;
       }
+      if(q.type === 'task' && q.taskKind === 'copypaste') {
+  content += `
+    <div class="task-box">
+      <div class="question-sub">Testo da copiare:</div>
+      <div style="padding:8px;background:#f3f4f6;border-radius:8px;margin-bottom:8px">
+        ${q.taskText}
+      </div>
+      <textarea id="taskAnswer" placeholder="Incolla qui..." 
+        style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:8px"></textarea>
+    </div>
+  `;
+
+  setTimeout(()=>{
+    let pasted = false;
+    $('#taskAnswer').on('paste', () => { pasted = true; });
+    $('#taskAnswer').data('pasted-flag', () => pasted);
+  },0);
+}
+
+
       if(q.type==='single'){
         content += `<div class="options">` + q.options.map((op,i)=>{
           const id=`${q.id}_opt_${i}`;
@@ -995,57 +1037,76 @@ Q.unshift({
           `;
         }
       }
-
       if(q.type==='matrix'){
-        content += `<table class="matrix"><thead><tr><th>Voce</th>` +
-          q.columns.map(c=>`<th>${c}</th>`).join('') +
-          `</tr></thead><tbody>` +
-          q.rows.map((r,ri)=>{
-            const rowOther = q.rowOther && r==='Altro (specificare)';
-            let otherInput = '';
-            const baseId=`${q.id}_r${ri}`;
-            const rowVal = (val && val[r]) || null;
-            if(rowOther){
-              const otherTxt = (val && val.__otherText) || '';
-              otherInput = `<div style="margin-top:6px"><input type="text" id="${q.id}_other" placeholder="Specifica..." value="${otherTxt}" style="width:100%;padding:8px;border:1px solid #e5e7eb;border-radius:8px"/></div>`;
-            }
-            return `<tr><td style="text-align:left">${r}${rowOther?otherInput:''}</td>` +
-              q.columns.map((c,ci)=>{
-                const id=`${baseId}_c${ci}`;
-                const checked = rowVal===c ? 'checked':'';
-                return `<td><input type="radio" name="${baseId}" id="${id}" value="${c}" ${checked} aria-label="${r} - ${c}"/></td>`;
-              }).join('') +
-            `</tr>`;
-          }).join('') + `</tbody></table>
-          <div class="question-sub">Seleziona una risposta per ciascuna riga.</div>`;
-      }
-
+    content += `<div class="matrix-wrap">
+        <table class="matrix">
+            <thead>
+                <tr><th>Voce</th>` +
+                    q.columns.map(c=>`<th>${c}</th>`).join('') +
+                `</tr>
+            </thead>
+            <tbody>` +
+                q.rows.map((r,ri)=>{
+                    const rowOther = q.rowOther && r==='Altro (specificare)';
+                    let otherInput = '';
+                    const baseId=`${q.id}_r${ri}`;
+                    const rowVal = (val && val[r]) || null;
+                    if(rowOther){
+                        const otherTxt = (val && val.__otherText) || '';
+                        otherInput = `<div style="margin-top:6px">
+                            <input type="text" id="${q.id}_other" placeholder="Specifica..." value="${otherTxt}" 
+                            style="width:100%;padding:8px;border:1px solid #e5e7eb;border-radius:8px"/>
+                        </div>`;
+                    }
+                    return `<tr>
+                        <td style="text-align:left">${r}${rowOther?otherInput:''}</td>` +
+                        q.columns.map((c,ci)=>{
+                            const id=`${baseId}_c${ci}`;
+                            const checked = rowVal===c ? 'checked':'';
+                            return `<td>
+                                <input type="radio" name="${baseId}" id="${id}" value="${c}" ${checked} 
+                                aria-label="${r} - ${c}"/>
+                            </td>`;
+                        }).join('') +
+                    `</tr>`;
+                }).join('') +
+            `</tbody>
+        </table>
+    </div>
+    <div class="question-sub">Seleziona una risposta per ciascuna riga.</div>`;
+    }      
       if(q.type==='matrixPerItem'){
-        // Per ciascun item dalla selezione precedente
-        const items = (state.answers[q.perItemSource] || []).slice();
-        content += `<table class="matrix"><thead><tr><th>Dispositivo</th>` +
-          q.columns.map(c=>`<th>${c.label}</th>`).join('') +
-          `</tr></thead><tbody>` +
-          items.map((item,ri)=>{
-            const base=`${q.id}_${ri}`;
-            const rowVal = (val && val[item]) || {};
-            return `<tr>
-              <td style="text-align:left">${item}</td>
-              ${q.columns.map((col,ci)=>{
-                const name = `${base}_${col.key}`;
-                const current = rowVal[col.key] || '';
-                return `<td>
-                  <select id="${name}" style="width:100%;padding:8px;border:1px solid #e5e7eb;border-radius:8px">
-                    <option value="">—</option>
-                    ${col.choices.map(choice=>`<option value="${choice}" ${current===choice?'selected':''}>${choice}</option>`).join('')}
-                  </select>
-                </td>`;
-              }).join('')}
-            </tr>`;
-          }).join('') + `</tbody></table>
-          <div class="question-sub">Compila le colonne per ogni dispositivo selezionato.</div>`;
-      }
-
+    const items = (state.answers[q.perItemSource] || []).slice();
+    content += `<div class="matrix-wrap">
+        <table class="matrix">
+            <thead>
+                <tr><th>Dispositivo</th>` +
+                    q.columns.map(c=>`<th>${c.label}</th>`).join('') +
+                `</tr>
+            </thead>
+            <tbody>` +
+                items.map((item,ri)=>{
+                    const base=`${q.id}_${ri}`;
+                    const rowVal = (val && val[item]) || {};
+                    return `<tr>
+                        <td style="text-align:left">${item}</td>` +
+                        q.columns.map((col,ci)=>{
+                            const name = `${base}_${col.key}`;
+                            const current = rowVal[col.key] || '';
+                            return `<td>
+                                <select id="${name}" style="width:100%;padding:8px;border:1px solid #e5e7eb;border-radius:8px">
+                                    <option value="">—</option>` +
+                                    col.choices.map(choice=>`<option value="${choice}" ${current===choice?'selected':''}>${choice}</option>`).join('') +
+                                `</select>
+                            </td>`;
+                        }).join('') +
+                    `</tr>`;
+                }).join('') +
+            `</tbody>
+        </table>
+    </div>
+    <div class="question-sub">Compila le colonne per ogni dispositivo selezionato.</div>`;
+   }
       if(q.type==='ynList'){
         content += `<div class="options">` + q.items.map((it,idx)=>{
           const idBase = `${q.id}_${idx}`;
@@ -1163,6 +1224,10 @@ Q.unshift({
         });
         return ok ? res : null;
       }
+     if(q.type === 'task' && q.taskKind === 'copypaste') {
+  const val = ($('#taskAnswer').val()||'').trim();
+  return val ? val : null;
+      }
       if(q.type==='ynList'){
         const res = {};
         let ok = true;
@@ -1202,12 +1267,7 @@ Q.unshift({
       }
 
       const ans = readAnswer(q);
-      if(!ans){
-        $('#helper').text('Per favore rispondi alla domanda prima di procedere.');
-        return false;
-      }
-
-      state.answers[q.id] = ans;
+    state.answers[q.id] = ans;
 
       // Salvataggio su Supabase (uno o più record a seconda del tipo)
       const saveRows = [];
@@ -1243,7 +1303,33 @@ Q.unshift({
     }
     saveRows.push(basePayload(q.text, ans, null));
       }
+     // --- Controllo specifico per task copypaste ---
+    if(q.type === 'task' && q.taskKind === 'copypaste') {
+    let correctAnswer = null;
+    const ansVal = (ans || '').trim().toLowerCase();
 
+    // Se l'utente lascia vuoto o scrive "non lo so", può andare avanti
+    if(ansVal === '' || ansVal === 'non lo so') {
+        saveRows.push(basePayload(q.text, ans || '', correctAnswer));
+    } else {
+        const pasted = typeof $('#taskAnswer').data('pasted-flag') === 'function'
+            ? $('#taskAnswer').data('pasted-flag')()
+            : false;
+
+        if(!pasted) {
+            alert('Devi incollare (Ctrl+V) il testo, non scriverlo.');
+            return false;
+        }
+
+        if(ans.trim() !== q.correct.trim()) {
+            alert('Il testo incollato non è corretto. Riprova.');
+            return false;
+        }
+
+        correctAnswer = q.correct;
+        saveRows.push(basePayload(q.text, ans, correctAnswer));
+    }
+}
       if(q.type==='multi'){
         saveRows.push(basePayload(q.text, ans.join('; '), q.correct ?? null));
       }
