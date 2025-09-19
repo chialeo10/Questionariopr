@@ -152,8 +152,8 @@
     /***********************
      * CONFIG SUPABASE
      ***********************/
-    const SUPABASE_URL = 'https://xaehjuzgsylukpfmduzz.supabase.co';
-    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhhZWhqdXpnc3lsdWtwZm1kdXp6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgxMjM4MjYsImV4cCI6MjA3MzY5OTgyNn0.a4xYo1S6z2BzF3YesNHBcA3LAbNNKIEyG6GDpyHOszo';
+    const SUPABASE_URL = 'https://lteztcnhpkleuvqeaphq.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx0ZXp0Y25ocGtsZXV2cWVhcGhxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI5MzE5MjYsImV4cCI6MjA2ODUwNzkyNn0.Wbvy9R5kVYRAjxzhbxK4d76ctqAT-ZyX4kaL7nqGFnc';
 
     async function salvaRispostaSupabase(payload) {
       try {
@@ -291,7 +291,7 @@ Q.unshift({
   }
 );
 
-   // ====== BLOCCO: DISPOSITIVI ======
+    // ====== BLOCCO: DISPOSITIVI ======
     Q.push(
        {
         id:'Q008',
@@ -302,7 +302,7 @@ Q.unshift({
         allowOther:true,
         image:null
       },
-     
+      // --- ramo NO
       {
         id:'Q009',
         showIf:{id:'Q008', equals:'Nessun dispositivo digitale'},
@@ -334,7 +334,7 @@ Q.unshift({
       {
         id:'Q012_Q013_Q014',
         showIf:{id:'Q008', inSelected:[
-          'Telefono fisso','Telefono cellulare (senza accesso ad internet, non smartphone)','Smartphone(con accesso a Internet, di regola con schermo tattile)','Tv (senza accesso ad internet e senza app)','Smart TV(con accesso ad internet e uso di app)','Computer (fisso o portatile, con tastiera e schermo)','Tablet (p. es. iPad, Samsung Galaxy Tab, solo schermo con tastiera digitale)','Ebook reader (p. es. Tolino, Kindle)','Smartwatch o braccialetto fitness (orologio con schermo tattile, p. es. Apple Watch)','Assistente vocale digitale con comandi vocali collegato ad Internet (ad es. Echo e Alexa di Amazon, Siri di Apple HomePod, Ok Google di Google Home)',
+          'Telefono fisso','Telefono cellulare (senza accesso ad internet, non smartphone)','Smartphone(con accesso a Internet, di regola con schermo tattile)','Tv (senza accesso ad internet e senza app)','Smart TV(con accesso ad internet e uso di app)','Computer (fisso o portatile, con tastiera e schermo)','Tablet (p. es. iPad, Samsung Galaxy Tab, solo schermo con tastiera digitale)','Ebook reader (p. es. Tolino, Kindle)','Smartwatch o braccialetto fitness (orologio con schermo tattile, p. es. Apple Watch)','Assistente vocale digitale con comandi vocali collegato ad Internet (ad es. Echo e Alexa di Amazon, Siri di Apple HomePod, Ok Google di Google Home)'
         ]},
         section:'DISPOSITIVI',
         text:'Per ciascun dispositivo selezionato, rispondi:',
@@ -449,7 +449,7 @@ Q.unshift({
         id:'Q022',
         showIfAny:[
           {id:'Q008', includes:'Smartphone'},
-          {id:'Q008', includes:'Tablet (p. es. iPad, Samsung Galaxy Tab, solo schermo con tastiera digitale)'}
+          {id:'Q008', includes:'Tablet (p. es. iPad, Samsung Galaxy Tab, solo schermo con tastiera digitale)'},
           {id:'Q008', includes:'Telefono cellulare (senza accesso ad internet, non smartphone)'},
         ],
         section:'DISPOSITIVI',
@@ -469,8 +469,8 @@ Q.unshift({
          id:'Q023',
        showIfAny:[
           {id:'Q008', includes:'Smartphone'},
-          {id:'Q008', includes:'Tablet (p. es. iPad, Samsung Galaxy Tab, solo schermo con tastiera digitale)'}
-         {id:'Q008', includes:'Telefono cellulare (senza accesso ad internet, non smartphone)'},
+          {id:'Q008', includes:'Tablet (p. es. iPad, Samsung Galaxy Tab, solo schermo con tastiera digitale)'},
+          {id:'Q008', includes:'Telefono cellulare (senza accesso ad internet, non smartphone)'},
         ],
         section:'DISPOSITIVI',
         text:'Sai cosa è uno screenshot?',
@@ -493,7 +493,6 @@ Q.unshift({
           'Piattaforme di streaming (Netflix, Prime Video, Disney+, ecc.)',
           'YouTube o simili',
           'Servizi on demand delle emittenti TV',
-          'Altro (specificare)'
         ],
         allowOther:true,
         image:null
@@ -508,6 +507,7 @@ Q.unshift({
         image:null
       }
     );
+
     // ====== BLOCCO: INTERNET ======
     Q.push(
       {
@@ -831,7 +831,7 @@ Q.unshift({
         image:null
       },
       {
-        id: 'Q051',
+        id: 'Q050',
         section: 'COMPETENZE',
         type: 'task',
         text: 'Copia il testo mostrato qui sotto e incollalo nel campo di testo. Se non sei in grado di completare l’attività, puoi lasciare il campo vuoto oppure digitare "non lo so".',
@@ -846,7 +846,7 @@ Q.unshift({
     // ====== BLOCCO: FINALI (Likert) ======
     Q.push(
       {
-        id:'Q050',
+        id:'Q051',
         section:'FINALE',
         text:'Indica in che misura sei d’accordo con le seguenti affermazioni.',
         type:'matrix',
@@ -1296,14 +1296,14 @@ Q.unshift({
       };
 
       if(q.type==='single'){
-        saveRows.push(basePayload(q.text, ans, q.correct ?? null));
+        saveRows.push(basePayload(q.id, ans, q.correct ?? null));
       }
       if(q.type === 'date'){
     if(!ans || isNaN(Date.parse(ans))){
         $('#helper').text('Inserisci una data valida per continuare.');
         return false;
     }
-    saveRows.push(basePayload(q.text, ans, null));
+    saveRows.push(basePayload(q.id, ans, null));
       }
      // --- Controllo specifico per task copypaste ---
     if(q.type === 'task' && q.taskKind === 'copypaste') {
@@ -1312,14 +1312,14 @@ Q.unshift({
 
     // Se l'utente lascia vuoto o scrive "non lo so", può andare avanti
     if(ansVal === '' || ansVal === 'non lo so') {
-        saveRows.push(basePayload(q.text, ans || '', correctAnswer));
+        saveRows.push(basePayload(q.id, ans || '', correctAnswer));
     } else {
         const pasted = typeof $('#taskAnswer').data('pasted-flag') === 'function'
             ? $('#taskAnswer').data('pasted-flag')()
             : false;
 
         if(!pasted) {
-            alert('Devi incollare (Ctrl+V) il testo, non scriverlo.');
+            alert('Devi incollare il testo, non scriverlo.');
             return false;
         }
 
@@ -1329,28 +1329,28 @@ Q.unshift({
         }
 
         correctAnswer = q.correct;
-        saveRows.push(basePayload(q.text, ans, correctAnswer));
+        saveRows.push(basePayload(q.id, ans, correctAnswer));
     }
 }
       if(q.type==='multi'){
-        saveRows.push(basePayload(q.text, ans.join('; '), q.correct ?? null));
+        saveRows.push(basePayload(q.id, ans.join('; '), q.correct ?? null));
       }
       if(q.type === 'dropdown'){
     if(!ans){
         $('#helper').text('Seleziona un’opzione per continuare.');
         return false;
     }
-    saveRows.push(basePayload(q.text, ans, q.correct ?? null));
+    saveRows.push(basePayload(q.id, ans, q.correct ?? null));
     }
       if(q.type==='matrix'){
         // una riga per ciascuna voce
         Object.entries(ans).forEach(([k,v])=>{
           if(k==='__otherText') return;
-          const dom = `${q.text} - ${k}`;
+          const dom = `${q.id} - ${k}`;
           saveRows.push(basePayload(dom, v, null));
         });
         if(ans.__otherText){
-          const dom = `${q.text} - Specifica (Altro)`;
+          const dom = `${q.id} - Specifica (Altro)`;
           saveRows.push(basePayload(dom, ans.__otherText, null));
         }
       }
@@ -1358,14 +1358,14 @@ Q.unshift({
         Object.entries(ans).forEach(([item,obj])=>{
           Object.entries(obj).forEach(([colKey,val])=>{
             const colLabel = (q.columns.find(c=>c.key===colKey)||{}).label || colKey;
-            const dom = `${q.text} - ${item} / ${colLabel}`;
+            const dom = `${q.id} - ${item} / ${colLabel}`;
             saveRows.push(basePayload(dom, val, null));
           });
         });
       }
       if(q.type==='ynList'){
         Object.entries(ans).forEach(([k,v])=>{
-          const dom = `${q.text} - ${k}`;
+          const dom = `${q.id} - ${k}`;
           saveRows.push(basePayload(dom, v, null));
         });
       }
@@ -1373,7 +1373,7 @@ Q.unshift({
         // salvo l’ordine come stringa numerata
         const ordered = ans.map((x,i)=>`${i+1}) ${x}`).join(' | ');
         // opzionale: calcolo "corretto" per la sicurezza? Non richiesto, quindi null.
-        saveRows.push(basePayload(q.text, ordered, null));
+        saveRows.push(basePayload(q.id, ordered, null));
       }
 
       // invia in sequenza (per semplicità e compatibilità con la tua tabella)
@@ -1419,3 +1419,11 @@ $('#backBtn').removeClass('hidden');
   </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
