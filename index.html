@@ -152,8 +152,8 @@
     /***********************
      * CONFIG SUPABASE
      ***********************/
-    const SUPABASE_URL = 'https://lteztcnhpkleuvqeaphq.supabase.co';
-    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx0ZXp0Y25ocGtsZXV2cWVhcGhxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI5MzE5MjYsImV4cCI6MjA2ODUwNzkyNn0.Wbvy9R5kVYRAjxzhbxK4d76ctqAT-ZyX4kaL7nqGFnc';
+    const SUPABASE_URL = 'https://xaehjuzgsylukpfmduzz.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhhZWhqdXpnc3lsdWtwZm1kdXp6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgxMjM4MjYsImV4cCI6MjA3MzY5OTgyNn0.a4xYo1S6z2BzF3YesNHBcA3LAbNNKIEyG6GDpyHOszo';
 
     async function salvaRispostaSupabase(payload) {
       try {
@@ -291,18 +291,18 @@ Q.unshift({
   }
 );
 
-    // ====== BLOCCO: DISPOSITIVI ======
+   // ====== BLOCCO: DISPOSITIVI ======
     Q.push(
        {
         id:'Q008',
         section:'DISPOSITIVI',
         text:'Quali dei seguenti dispositivi possiedi o a quali hai accesso? (Scelta multipla)',
         type:'multi',
-        options:['Computer fisso o portatile','Smartphone','Tablet / iPad','Smart TV','Nessun dispositivo digitale'],
+        options:['Telefono fisso','Telefono cellulare (senza accesso ad internet, non smartphone)','Smartphone(con accesso a Internet, di regola con schermo tattile)','Tv (senza accesso ad internet e senza app)','Smart TV(con accesso ad internet e uso di app)','Computer (fisso o portatile, con tastiera e schermo)','Tablet (p. es. iPad, Samsung Galaxy Tab, solo schermo con tastiera digitale)','Ebook reader (p. es. Tolino, Kindle)','Smartwatch o braccialetto fitness (orologio con schermo tattile, p. es. Apple Watch)','Assistente vocale digitale con comandi vocali collegato ad Internet (ad es. Echo e Alexa di Amazon, Siri di Apple HomePod, Ok Google di Google Home)','Nessun dispositivo digitale'],
         allowOther:true,
         image:null
       },
-      // --- ramo NO
+     
       {
         id:'Q009',
         showIf:{id:'Q008', equals:'Nessun dispositivo digitale'},
@@ -334,7 +334,7 @@ Q.unshift({
       {
         id:'Q012_Q013_Q014',
         showIf:{id:'Q008', inSelected:[
-          'Computer fisso o portatile','Smartphone','Tablet / iPad','Smart TV'
+          'Telefono fisso','Telefono cellulare (senza accesso ad internet, non smartphone)','Smartphone(con accesso a Internet, di regola con schermo tattile)','Tv (senza accesso ad internet e senza app)','Smart TV(con accesso ad internet e uso di app)','Computer (fisso o portatile, con tastiera e schermo)','Tablet (p. es. iPad, Samsung Galaxy Tab, solo schermo con tastiera digitale)','Ebook reader (p. es. Tolino, Kindle)','Smartwatch o braccialetto fitness (orologio con schermo tattile, p. es. Apple Watch)','Assistente vocale digitale con comandi vocali collegato ad Internet (ad es. Echo e Alexa di Amazon, Siri di Apple HomePod, Ok Google di Google Home)',
         ]},
         section:'DISPOSITIVI',
         text:'Per ciascun dispositivo selezionato, rispondi:',
@@ -350,7 +350,7 @@ Q.unshift({
       // Domande aggiuntive per Computer
       {
         id:'Q015',
-        showIf:{id:'Q008', includes:'Computer fisso o portatile'},
+        showIf:{id:'Q008', includes:'Computer (fisso o portatile, con tastiera e schermo)'},
         section:'DISPOSITIVI',
         text:' Chi ti ha insegnato ad utilizzare il computer?',
         type:'multi',
@@ -359,7 +359,7 @@ Q.unshift({
       },
       {
         id:'Q016',
-        showIf:{id:'Q008', includes:'Computer fisso o portatile'},
+        showIf:{id:'Q008', includes:'Computer (fisso o portatile, con tastiera e schermo)'},
         section:'DISPOSITIVI',
         text:'Quale sistema operativo possiede il tuo computer',
         type:'single',
@@ -375,7 +375,7 @@ Q.unshift({
       },
       {
         id:'Q017',
-        showIf:{id:'Q008', includes:'Computer fisso o portatile'},
+        showIf:{id:'Q008', includes:'Computer (fisso o portatile, con tastiera e schermo)'},
         section:'DISPOSITIVI',
         text:'Quale browser (sistema di ricerca) utilizzi sul tuo computer?',
         type:'multi',
@@ -392,7 +392,7 @@ Q.unshift({
       },
       {
         id:'Q018',
-        showIf:{id:'Q008', includes:'Computer fisso o portatile'},
+        showIf:{id:'Q008', includes:'Computer (fisso o portatile, con tastiera e schermo)'},
         section:'DISPOSITIVI',
         text:' Quali app usi più frequentemente? (Risposta multipla)',
         type:'multi',
@@ -414,7 +414,8 @@ Q.unshift({
       {
          id:'Q020',
        showIfAny:[
-          {id:'Q008', includes:'Smartphone'},
+          {id:'Q008', includes:'Smartphone(con accesso a Internet, di regola con schermo tattile)'},
+          {id:'Q008', includes:'Telefono cellulare (senza accesso ad internet, non smartphone)'},
         ],
         section:'DISPOSITIVI',
         text:'Quale sistema operativo utilizza il tuo Smartphone ',
@@ -430,7 +431,7 @@ Q.unshift({
       {
          id:'Q021',
        showIfAny:[
-          {id:'Q008', includes:'Smartphone'},
+          {id:'Q008', includes:'Smartphone(con accesso a Internet, di regola con schermo tattile)'},
         ],
         section:'DISPOSITIVI',
         text:'Quale browser (sistema di ricerca) utilizzi sul tuo Smartphone?',
@@ -448,7 +449,8 @@ Q.unshift({
         id:'Q022',
         showIfAny:[
           {id:'Q008', includes:'Smartphone'},
-          {id:'Q008', includes:'Tablet / iPad'}
+          {id:'Q008', includes:'Tablet (p. es. iPad, Samsung Galaxy Tab, solo schermo con tastiera digitale)'}
+          {id:'Q008', includes:'Telefono cellulare (senza accesso ad internet, non smartphone)'},
         ],
         section:'DISPOSITIVI',
         text:'Che cos’è il T9 negli Smartphone?',
@@ -467,7 +469,8 @@ Q.unshift({
          id:'Q023',
        showIfAny:[
           {id:'Q008', includes:'Smartphone'},
-          {id:'Q008', includes:'Tablet / iPad'}
+          {id:'Q008', includes:'Tablet (p. es. iPad, Samsung Galaxy Tab, solo schermo con tastiera digitale)'}
+         {id:'Q008', includes:'Telefono cellulare (senza accesso ad internet, non smartphone)'},
         ],
         section:'DISPOSITIVI',
         text:'Sai cosa è uno screenshot?',
@@ -481,7 +484,7 @@ Q.unshift({
       // Domande aggiuntive per Smart TV
       {
         id:'Q024',
-        showIf:{id:'Q008', includes:'Smart TV'},
+        showIf:{id:'Q008', includes:'Smart TV(con accesso ad internet e uso di app)'},
         section:'DISPOSITIVI',
         text:'(Smart TV) Cosa guardi principalmente? (Risposta multipla)',
         type:'multi',
@@ -497,7 +500,7 @@ Q.unshift({
       },
       {
         id:'Q025',
-        showIf:{id:'Q008', includes:'Smart TV'},
+        showIf:{id:'Q008', includes:'Smart TV(con accesso ad internet e uso di app)'},
         section:'DISPOSITIVI',
         text:'(Smart TV) Quanto spesso utilizzi le funzioni “smart” della TV?',
         type:'single',
@@ -505,7 +508,6 @@ Q.unshift({
         image:null
       }
     );
-
     // ====== BLOCCO: INTERNET ======
     Q.push(
       {
@@ -1417,12 +1419,3 @@ $('#backBtn').removeClass('hidden');
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
